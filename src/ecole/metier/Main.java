@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
         // Création de quelques cours
         Cours math = new Cours("MATH101", "Mathématiques", 0);
         Cours francais = new Cours("FR101", "Français", 0);
