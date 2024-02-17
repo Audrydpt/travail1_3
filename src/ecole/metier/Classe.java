@@ -2,14 +2,24 @@ package ecole.metier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Classe {
-    private String sigle;
-    private int annee;
-    private String specialite;
-    private int nbreEleve;
-    private List<Cours> coursList;
+    protected int id; // Identifiant numérique
+    protected String sigle;
+    protected int annee;
+    protected String specialite;
+    protected int nbreEleve;
+    protected List<Cours> coursList;
 
+    public Classe(int id, String sigle, int annee, String specialite, int nbreEleve, List<Cours> coursList) {
+        this.id = id;
+        this.sigle = sigle;
+        this.annee = annee;
+        this.specialite = specialite;
+        this.nbreEleve = nbreEleve;
+        this.coursList = coursList;
+    }
     public Classe(String sigle, int annee, String specialite, int nbreEleve, List<Cours> coursList) {
         this.sigle = sigle;
         this.annee = annee;
@@ -21,7 +31,7 @@ public class Classe {
     public int nbrHeuresTot() {
         int totalHeures = 0;
         for (Cours cours : coursList) {
-            totalHeures += cours.getNbHeures();
+            totalHeures += cours.getInfos().getNbHeures();
         }
         return totalHeures;
     }
@@ -37,20 +47,19 @@ public class Classe {
     public List<String> listeSallesetHeures() {
         List<String> sallesEtHeuresList = new ArrayList<>();
         for (Cours cours : coursList) {
-            String salleInfo = cours.getSalleParDefault().getSigle() + " - " + cours.getNbHeures() + " heures";
+            String salleInfo = cours.getSalleParDefault().getSigle() + " - " + cours.getInfos().getNbHeures() + " heures";
             sallesEtHeuresList.add(salleInfo);
         }
         return sallesEtHeuresList;
     }
 
-
-
-    public List<CoursEtHeures> listeCoursEtHeures() {
-        List<CoursEtHeures> coursEtHeuresList = new ArrayList<>();
+    public List<Cours> listeCoursEtHeures() {
+        List<Cours> coursListWithHours = new ArrayList<>();
         for (Cours cours : coursList) {
-            coursEtHeuresList.add(new CoursEtHeures(cours, cours.getNbHeures()));
+            Infos infos = cours.getInfos();
+            coursListWithHours.add(new Cours(cours.getId(), cours.getCode(), cours.getIntitule(), infos.getNbHeures()));
         }
-        return coursEtHeuresList;
+        return coursListWithHours;
     }
 
     public boolean salleCapaciteOK(Salle salle) {
@@ -64,7 +73,9 @@ public class Classe {
     }
 
     public void addCours(Cours cours, int heures) {
-        cours.setNbHeures(heures);
+        Infos infos = cours.getInfos();
+        infos.setNbHeures(heures);
+        cours.setInfos(infos);
         coursList.add(cours);
     }
 
@@ -73,10 +84,25 @@ public class Classe {
     }
 
     public void modifCours(Cours cours, int heures) {
-        cours.setNbHeures(heures);
+        Infos infos = cours.getInfos();
+        infos.setNbHeures(heures);
+        cours.setInfos(infos);
     }
 
     public void suppCours(Cours cours) {
         coursList.remove(cours);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Classe classe = (Classe) o;
+        return id == classe.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -1,7 +1,5 @@
 package ecole.metier;
 
-import ecole.metier.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,17 +27,15 @@ public class Main {
         Classe classeA = new Classe("1A", 2024, "Scientifique", 25, coursList);
 
         // Association des enseignants et des salles aux cours
-        Infos infoMath = new Infos();
+        Infos infoMath = math.getInfos();
         infoMath.setEnseignant(profMath);
         infoMath.setSalle(salleA);
         math.setSalleParDefault(salleA);
-        math.setInfos(infoMath);
 
-        Infos infoFrancais = new Infos();
+        Infos infoFrancais = francais.getInfos();
         infoFrancais.setEnseignant(profFrancais);
         infoFrancais.setSalle(salleB);
         francais.setSalleParDefault(salleB);
-        francais.setInfos(infoFrancais);
 
         // Ajout des infos à la classe
         classeA.addCours(math, 5);
@@ -58,12 +54,6 @@ public class Main {
         System.out.println("Liste des salles et de leurs heures : ");
         for (String salleInfo : sallesEtHeuresList) {
             System.out.println(salleInfo);
-        }
-
-        List<CoursEtHeures> coursEtHeuresList = classeA.listeCoursEtHeures();
-        System.out.println("Liste des cours et de leurs heures : ");
-        for (CoursEtHeures coursEtHeures : coursEtHeuresList) {
-            System.out.println(coursEtHeures.getCours().getIntitule() + " - " + coursEtHeures.getHeures() + " heures");
         }
 
         System.out.println("Capacité de la salle A OK : " + classeA.salleCapaciteOK(salleA));

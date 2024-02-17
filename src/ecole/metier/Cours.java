@@ -1,40 +1,40 @@
 package ecole.metier;
 
-class Cours {
-    private String code;
-    private String intitule;
-    private int nbHeures;
-    private Salle salleParDefault;
-    private Infos infos;
+import java.util.Objects;
 
-    public Cours(String code, String intitule) {
-        this.code = code;
-        this.intitule = intitule;
-    }
+public class Cours {
+    protected int id; // Identifiant numérique
+    protected String code;
+    protected String intitule;
+    protected Salle salleParDefault;
+    protected Infos infos;
+
     public Cours(String code, String intitule, int nbHeures) {
         this.code = code;
         this.intitule = intitule;
-        this.nbHeures = nbHeures;
-
+        this.infos = new Infos();
+        this.infos.setNbHeures(nbHeures);
     }
+
+
+    public Cours(int id, String code, String intitule, int nbHeures) {
+        this.id = id;
+        this.code = code;
+        this.intitule = intitule;
+        this.infos = new Infos();
+        this.infos.setNbHeures(nbHeures);
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public String getCode() {
         return code;
     }
 
-    public int getNbHeures() {
-        return nbHeures;
-    }
-
-    public void setNbHeures(int nbHeures) {
-        this.nbHeures = nbHeures;
-    }
-
     public String getIntitule() {
         return intitule;
-    }
-
-    public void setIntitule(String intitule) {
-        this.intitule = intitule;
     }
 
     public Salle getSalleParDefault() {
@@ -45,11 +45,27 @@ class Cours {
         this.salleParDefault = salleParDefault;
     }
 
-    public Enseignant getEnseignant() {
-        return infos.getEnseignant();
+    public Infos getInfos() {
+        return infos;
     }
 
     public void setInfos(Infos infos) {
         this.infos = infos;
+    }
+
+    public Enseignant getEnseignant() {
+        return infos.getEnseignant();
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cours cours = (Cours) o;
+        return id == cours.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

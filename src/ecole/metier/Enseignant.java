@@ -2,15 +2,17 @@ package ecole.metier;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
-class Enseignant {
-    private String matricule;
-    private String nom;
-    private String prenom;
-    private String tel;
-    private int chargeSem;
-    private BigDecimal salaireMensuel;
-    private LocalDate dateEngagement;
+public class Enseignant {
+    protected int id; // Identifiant numérique
+    protected String matricule;
+    protected String nom;
+    protected String prenom;
+    protected String tel;
+    protected int chargeSem;
+    protected BigDecimal salaireMensuel;
+    protected LocalDate dateEngagement;
 
     public Enseignant(String matricule, String nom, String prenom, String tel, int chargeSem, BigDecimal salaireMensuel, LocalDate dateEngagement) {
         this.matricule = matricule;
@@ -76,5 +78,22 @@ class Enseignant {
 
     public void setDateEngagement(LocalDate dateEngagement) {
         this.dateEngagement = dateEngagement;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Enseignant that = (Enseignant) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
