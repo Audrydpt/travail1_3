@@ -3,7 +3,7 @@ package ecole.metier;
 import java.util.Objects;
 
 public class Cours {
-    protected int id; // Identifiant numérique
+    protected int id;
     protected String code;
     protected String intitule;
     protected Salle salleParDefault;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Classe {
-    protected int id; // Identifiant numérique
+    protected int id;
     protected String sigle;
     protected int annee;
     protected String specialite;

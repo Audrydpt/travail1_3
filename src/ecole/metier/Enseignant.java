@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Enseignant {
-    protected int id; // Identifiant numérique
+    protected int id;
     protected String matricule;
     protected String nom;
     protected String prenom;
