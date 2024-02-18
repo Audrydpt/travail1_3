@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-
         // Création de quelques cours
         Cours math = new Cours("MATH101", "Mathématiques", 0);
         Cours francais = new Cours("FR101", "Français", 0);
@@ -45,19 +44,31 @@ public class Main {
         // Affichage des résultats
         System.out.println("Total des heures de la classe : " + classeA.nbrHeuresTot());
 
-        List<Enseignant> enseignantList = classeA.listeEnseignantHeures();
-        System.out.println("Liste des enseignants et de leurs heures : ");
-        for (Enseignant enseignant : enseignantList) {
-            System.out.println(enseignant.getNom() + " - " + enseignant.getChargeSem() + " heures");
-        }
+        // Modification d'un cours
+        Salle nouvelleSalle = new Salle("C", 40);
+        classeA.modifCours(math, nouvelleSalle);
 
+        // Suppression d'un cours
+        classeA.suppCours(francais);
+
+        // Affichage mis à jour
+        System.out.println("Total des heures de la classe après modification : " + classeA.nbrHeuresTot());
         List<String> sallesEtHeuresList = classeA.listeSallesetHeures();
         System.out.println("Liste des salles et de leurs heures : ");
         for (String salleInfo : sallesEtHeuresList) {
             System.out.println(salleInfo);
         }
 
-        System.out.println("Capacité de la salle A OK : " + classeA.salleCapaciteOK(salleA));
-        System.out.println("Capacité de la salle B OK : " + classeA.salleCapaciteOK(salleB));
+        // Ajout d'un nouveau cours
+        Cours histoire = new Cours("HIST101", "Histoire", 0);
+        classeA.addCours(histoire, 3);
+
+        // Affichage après ajout
+        System.out.println("Total des heures de la classe après ajout : " + classeA.nbrHeuresTot());
+        List<Cours> coursListWithHours = classeA.listeCoursEtHeures();
+        System.out.println("Liste des cours et de leurs heures : ");
+        for (Cours cours : coursListWithHours) {
+            System.out.println(cours.getIntitule() + " - " + cours.getInfos().getNbHeures() + " heures");
+        }
     }
 }
