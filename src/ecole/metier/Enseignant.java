@@ -77,6 +77,17 @@ public class Enseignant {
         this.dateEngagement = dateEngagement;
     }
 
+    public Enseignant(int id, String matricule, String nom, String prenom, String tel, int chargeSem, BigDecimal salaireMensuel, LocalDate dateEngagement) {
+        this.id = id;
+        this.matricule = matricule;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.tel = tel;
+        this.chargeSem = chargeSem;
+        this.salaireMensuel = salaireMensuel;
+        this.dateEngagement = dateEngagement;
+    }
+
     /**
      * Obtient l'identifiant de l'enseignant
      *

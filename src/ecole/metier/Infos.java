@@ -3,7 +3,7 @@ package ecole.metier;
 import java.util.Objects;
 
 /**
- * La classe Infos représente les informations générale
+ * La classe Infos représente les informations générales
  * Chaque instance d'Infos est caractérisée par un identifiant unique, un enseignant,
  * une salle et le nombre d'heures attribuées.
  *
@@ -37,10 +37,18 @@ class Infos {
 
     /**
      * Constructeur de la classe Infos
-     * Initialise le nombre d'heures à zéro
-     */
-    public Infos() {
-        this.nbHeures = 0;
+        *
+        * @param id         Identifiant unique de l'ensemble d'informations
+        * @param enseignant Enseignant associé aux informations
+        * @param salle      Salle associée aux informations
+        * @param nbHeures   Nombre d'heures attribuées
+        */
+
+    public Infos(int id, Enseignant enseignant, Salle salle, int nbHeures) {
+        this.id = id;
+        this.enseignant = enseignant;
+        this.salle = salle;
+        this.nbHeures = nbHeures;
     }
 
     /**
@@ -129,4 +137,10 @@ class Infos {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "Infos - Enseignant: " + enseignant.getNom() + ", Salle: " + salle.getSigle() + ", Heures: " + nbHeures;
+    }
+
 }

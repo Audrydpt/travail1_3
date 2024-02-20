@@ -38,6 +38,13 @@ public class Salle {
         this.capacite = capacite;
     }
 
+
+    public Salle(int id, String sigle, int capacite) {
+        this.id = id;
+        this.sigle = sigle;
+        this.capacite = capacite;
+    }
+
     /**
      * Récupère le sigle de la salle
      *

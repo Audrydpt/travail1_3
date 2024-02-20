@@ -34,24 +34,6 @@ public class Cours {
      */
     protected Salle salleParDefault;
 
-    /**
-     * Informations spécifiques du cours
-     */
-    protected Infos infos;
-
-    /**
-     * Constructeur de la classe Cours
-     *
-     * @param code     Code du cours
-     * @param intitule Intitulé du cours
-     * @param nbHeures Nombre d'heures associées au cours
-     */
-    public Cours(String code, String intitule, int nbHeures) {
-        this.code = code;
-        this.intitule = intitule;
-        this.infos = new Infos();
-        this.infos.setNbHeures(nbHeures);
-    }
 
     /**
      * Constructeur de la classe Cours avec un identifiant
@@ -59,14 +41,18 @@ public class Cours {
      * @param id       Identifiant du cours
      * @param code     Code du cours
      * @param intitule Intitulé du cours
-     * @param nbHeures Nombre d'heures associées au cours
      */
-    public Cours(int id, String code, String intitule, int nbHeures) {
+    public Cours(int id, String code, String intitule) {
         this.id = id;
         this.code = code;
         this.intitule = intitule;
-        this.infos = new Infos();
-        this.infos.setNbHeures(nbHeures);
+    }
+
+    public Cours(int id, String code, String intitule, Salle salleParDefault) {
+        this.id = id;
+        this.code = code;
+        this.intitule = intitule;
+        this.salleParDefault = salleParDefault;
     }
 
     /**
@@ -112,33 +98,6 @@ public class Cours {
      */
     public void setSalleParDefault(Salle salleParDefault) {
         this.salleParDefault = salleParDefault;
-    }
-
-    /**
-     * Obtient les informations spécifiques du cours
-     *
-     * @return Les informations spécifiques du cours
-     */
-    public Infos getInfos() {
-        return infos;
-    }
-
-    /**
-     * Modifie les informations spécifiques du cours
-     *
-     * @param infos Les nouvelles informations spécifiques du cours
-     */
-    public void setInfos(Infos infos) {
-        this.infos = infos;
-    }
-
-    /**
-     * Obtient l'enseignant associé au cours
-     *
-     * @return L'enseignant associé au cours
-     */
-    public Enseignant getEnseignant() {
-        return infos.getEnseignant();
     }
 
     /**

@@ -2,73 +2,53 @@ package ecole.metier;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
-        // Création de quelques cours
-        Cours math = new Cours("MATH101", "Mathématiques", 0);
-        Cours francais = new Cours("FR101", "Français", 0);
+        // Création d'une classe
+        Classe classe1 = new Classe(1, "A", 2024, "Informatique", 40000);
+        Classe classe2 = new Classe(2, "B", 2024, "Math", 40);
 
-        // Création de quelques enseignants
-        Enseignant profMath = new Enseignant("123", "Dupont", "Jean", "123456789", 10, BigDecimal.valueOf(3000), LocalDate.now());
-        Enseignant profFrancais = new Enseignant("456", "Durant", "Marie", "987654321", 12, BigDecimal.valueOf(3500), LocalDate.now());
+        // Création d'enseignants
+        Enseignant enseignant1 = new Enseignant(1, "E001", "Dupont", "Audry", "514-123-4567", 35, new BigDecimal(5000), LocalDate.of(2010, 1, 1));
+        Enseignant enseignant2 = new Enseignant(2, "E002", "Martin", "Sophie", "514-234-5678", 30, new BigDecimal(4500), LocalDate.of(2012, 3, 15));
 
-        // Création de quelques salles
-        Salle salleA = new Salle("A", 30);
-        Salle salleB = new Salle("B", 25);
+        // Création de salles
+        Salle salle1 = new Salle(1, "S001", 3);
+        Salle salle2 = new Salle(2, "S002", 100);
 
-        // Création de la classe
-        List<Cours> coursList = new ArrayList<>();
-        coursList.add(math);
-        coursList.add(francais);
+        // Création de cours
+        Cours cours1 = new Cours(1, "C001", "Programmation orientée objet", salle1);
+        Cours cours2 = new Cours(2, "C002", "Base de données", salle2);
 
-        Classe classeA = new Classe("1A", 2024, "Scientifique", 25, coursList);
+        classe1.addCours(cours1, 5);
+        classe1.addCours(cours2, 4);
 
-        // Association des enseignants et des salles aux cours
-        Infos infoMath = math.getInfos();
-        infoMath.setEnseignant(profMath);
-        infoMath.setSalle(salleA);
-        math.setSalleParDefault(salleA);
+        // Affichage des informations
+        System.out.println("Liste des cours et heures : " + classe1.listeCoursEtHeures());
+        System.out.println("Nombre total d'heures : " + classe1.nbrHeuresTot());
 
-        Infos infoFrancais = francais.getInfos();
-        infoFrancais.setEnseignant(profFrancais);
-        infoFrancais.setSalle(salleB);
-        francais.setSalleParDefault(salleB);
+        // Vérification de la capacité de la salle
+        System.out.println("Capacité de la salle 1 OK : " + classe1.salleCapaciteOK(salle1));
+        System.out.println("Capacité de la salle 2 OK : " + classe2.salleCapaciteOK(salle2));
 
-        // Ajout des infos à la classe
-        classeA.addCours(math, 5);
-        classeA.addCours(francais, 4);
+        // Modification du nombre d'heures d'un cours
+        classe1.modifCours(cours1, 10);
 
-        // Affichage des résultats
-        System.out.println("Total des heures de la classe : " + classeA.nbrHeuresTot());
-
-        // Modification d'un cours
-        Salle nouvelleSalle = new Salle("C", 40);
-        classeA.modifCours(math, nouvelleSalle);
+        System.out.println("Liste des cours et heures après modifications : " + classe1.listeCoursEtHeures());
 
         // Suppression d'un cours
-        classeA.suppCours(francais);
+        classe1.suppCours(cours1);
 
-        // Affichage mis à jour
-        System.out.println("Total des heures de la classe après modification : " + classeA.nbrHeuresTot());
-        List<String> sallesEtHeuresList = classeA.listeSallesetHeures();
-        System.out.println("Liste des salles et de leurs heures : ");
-        for (String salleInfo : sallesEtHeuresList) {
-            System.out.println(salleInfo);
-        }
+        System.out.println("Liste des cours et heures après suppression : " + classe1.listeCoursEtHeures());
 
-        // Ajout d'un nouveau cours
-        Cours histoire = new Cours("HIST101", "Histoire", 0);
-        classeA.addCours(histoire, 3);
+        //cration infos
+        Infos info1 = new Infos(1, enseignant1, salle1, 10);
+        Infos info2 = new Infos(2, enseignant2, salle2, 8);
 
-        // Affichage après ajout
-        System.out.println("Total des heures de la classe après ajout : " + classeA.nbrHeuresTot());
-        List<Cours> coursListWithHours = classeA.listeCoursEtHeures();
-        System.out.println("Liste des cours et de leurs heures : ");
-        for (Cours cours : coursListWithHours) {
-            System.out.println(cours.getIntitule() + " - " + cours.getInfos().getNbHeures() + " heures");
-        }
+        //affichage infos
+        System.out.println("Liste des infos : " + classe1.listeInfos());
     }
 }

@@ -12,6 +12,7 @@ import java.util.Objects;
  * @see Cours
  * @see Enseignant
  * @see Salle
+ * @see Infos
  */
 public class Classe {
 
@@ -39,11 +40,11 @@ public class Classe {
      * Nombre d'élèves dans la classe
      */
     protected int nbreEleve;
+    protected List<CoursEtHeures> coursEtHeuresList = new ArrayList<>();
+    protected List<EnseignantEtHeures> enseignantEtHeuresList = new ArrayList<>();
+    protected List<SalleEtHeures> salleEtHeuresList = new ArrayList<>();
+    protected List<Infos> infoList=new ArrayList<>();
 
-    /**
-     * Liste des cours dispensés dans la classe
-     */
-    protected List<Cours> coursList;
 
     /**
      * Constructeur de la classe avec l'identifiant
@@ -53,72 +54,27 @@ public class Classe {
      * @param annee       Année de la classe
      * @param specialite  Spécialité de la classe
      * @param nbreEleve   Nombre d'élèves dans la classe
-     * @param coursList   Liste des cours dispensés dans la classe
      */
-    public Classe(int id, String sigle, int annee, String specialite, int nbreEleve, List<Cours> coursList) {
+    public Classe(int id, String sigle, int annee, String specialite, int nbreEleve) {
         this.id = id;
         this.sigle = sigle;
         this.annee = annee;
         this.specialite = specialite;
         this.nbreEleve = nbreEleve;
-        this.coursList = coursList;
     }
 
-    /**
-     * Constructeur de la classe sans identifiant (à utiliser lors de la création de nouvelles classes)
-     *
-     * @param sigle       Sigle de la classe
-     * @param annee       Année de la classe
-     * @param specialite  Spécialité de la classe
-     * @param nbreEleve   Nombre d'élèves dans la classe
-     * @param coursList   Liste des cours dispensés dans la classe
-     */
-    public Classe(String sigle, int annee, String specialite, int nbreEleve, List<Cours> coursList) {
-        this.sigle = sigle;
-        this.annee = annee;
-        this.specialite = specialite;
-        this.nbreEleve = nbreEleve;
-        this.coursList = coursList;
+
+
+    public List<Infos> getInfo() {
+        return infoList;
     }
 
-    /**
-     * Calcule le nombre total d'heures de tous les cours dans la classe
-     *
-     * @return Le nombre total d'heures
-     */
     public int nbrHeuresTot() {
         int totalHeures = 0;
-        for (Cours cours : coursList) {
-            totalHeures += cours.getInfos().getNbHeures();
+        for (CoursEtHeures coursEtHeures : coursEtHeuresList ) {
+            totalHeures += coursEtHeures.getHeures();
         }
         return totalHeures;
-    }
-
-    /**
-     * Récupère la liste des enseignants et de leurs heures dans la classe
-     *
-     * @return Liste des enseignants et de leurs heures
-     */
-    public List<Enseignant> listeEnseignantHeures() {
-        List<Enseignant> enseignantList = new ArrayList<>();
-        for (Cours cours : coursList) {
-            enseignantList.add(cours.getEnseignant());
-        }
-        return enseignantList;
-    }
-
-    /**
-     * Récupère la liste des salles et de leurs heures dans la classe
-     *
-     * @return Liste des salles et de leurs heures
-     */
-    public List<String> listeSallesetHeures() {
-        List<String> sallesEtHeuresList = new ArrayList<>();
-        for (Cours cours : coursList) {
-            String salleInfo = cours.getSalleParDefault().getSigle() + " - " + cours.getInfos().getNbHeures() + " heures";
-            sallesEtHeuresList.add(salleInfo);
-        }
-        return sallesEtHeuresList;
     }
 
     /**
@@ -126,13 +82,30 @@ public class Classe {
      *
      * @return Liste des cours et de leurs heures
      */
-    public List<Cours> listeCoursEtHeures() {
-        List<Cours> coursListWithHours = new ArrayList<>();
-        for (Cours cours : coursList) {
-            Infos infos = cours.getInfos();
-            coursListWithHours.add(new Cours(cours.getId(), cours.getCode(), cours.getIntitule(), infos.getNbHeures()));
-        }
-        return coursListWithHours;
+    public List<CoursEtHeures> listeCoursEtHeures() {
+        return coursEtHeuresList;
+    }
+
+    /**
+     * Récupère la liste des enseignants et de leurs heures dans la classe
+     *
+     * @return Liste des enseignants et de leurs heures
+     */
+    public List<EnseignantEtHeures> listeEnseignantHeures() {
+        return enseignantEtHeuresList;
+    }
+
+    /**
+     * Récupère la liste des salles et de leurs heures dans la classe
+     *
+     * @return Liste des salles et de leurs heures
+     */
+    public List<SalleEtHeures> listeSallesEtHeures() {
+        return salleEtHeuresList;
+    }
+
+    public List<Infos> listeInfos() {
+        return infoList;
     }
 
     /**
@@ -143,13 +116,14 @@ public class Classe {
      */
     public boolean salleCapaciteOK(Salle salle) {
         int capaciteTotale = 0;
-        for (Cours cours : coursList) {
-            if (cours.getSalleParDefault().equals(salle)) {
-                capaciteTotale += salle.getCapacite();
+        for (SalleEtHeures salleEtHeures : salleEtHeuresList) {
+            if (salleEtHeures.getSalle().equals(salle)) {
+                capaciteTotale += salleEtHeures.getSalle().getCapacite();
             }
         }
-        return capaciteTotale >= nbreEleve;
+        return capaciteTotale <= nbreEleve;
     }
+
 
     /**
      * Ajoute un cours à la classe avec le nombre d'heures spécifié
@@ -158,10 +132,8 @@ public class Classe {
      * @param heures Le nombre d'heures pour ce cours
      */
     public void addCours(Cours cours, int heures) {
-        Infos infos = cours.getInfos();
-        infos.setNbHeures(heures);
-        cours.setInfos(infos);
-        coursList.add(cours);
+        CoursEtHeures coursEtHeures = new CoursEtHeures(cours, heures);
+        coursEtHeuresList.add(coursEtHeures);
     }
 
     /**
@@ -171,11 +143,12 @@ public class Classe {
      * @param salle La nouvelle salle par défaut
      */
     public void modifCours(Cours cours, Salle salle) {
-        coursList.remove(cours);
-        cours.setSalleParDefault(salle);
-        coursList.add(cours);
+        for (CoursEtHeures coursEtHeures : coursEtHeuresList) {
+            if (coursEtHeures.getCours().equals(cours)) {
+                coursEtHeures.getCours().setSalleParDefault(salle);
+            }
+        }
     }
-
 
     /**
      * Modifie le nombre d'heures d'un cours dans la classe
@@ -184,11 +157,12 @@ public class Classe {
      * @param heures Le nouveau nombre d'heures
      */
     public void modifCours(Cours cours, int heures) {
-        Infos infos = cours.getInfos();
-        infos.setNbHeures(heures);
-        cours.setInfos(infos);
+        for (CoursEtHeures coursEtHeures : coursEtHeuresList) {
+            if (coursEtHeures.getCours().equals(cours)) {
+                coursEtHeures.setHeures(heures);
+            }
+        }
     }
-
 
     /**
      * Supprime un cours de la classe
@@ -196,7 +170,7 @@ public class Classe {
      * @param cours Le cours à supprimer
      */
     public void suppCours(Cours cours) {
-        coursList.remove(cours);
+        coursEtHeuresList.removeIf(coursEtHeures -> coursEtHeures.getCours().equals(cours));
     }
 
     /**
@@ -215,6 +189,7 @@ public class Classe {
 
     /**
      * calcul du hashcode
+     *
      * @return hashcode
      */
     @Override
