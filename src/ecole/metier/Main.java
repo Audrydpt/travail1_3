@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Création d'une classe
-        Classe classe1 = new Classe(1, "A", 2024, "Informatique", 40000);
+        Classe classe1 = new Classe(1, "A", 2024, "Informatique", 4000);
         Classe classe2 = new Classe(2, "B", 2024, "Math", 40);
 
         // Création d'enseignants
@@ -16,7 +16,7 @@ public class Main {
         Enseignant enseignant2 = new Enseignant(2, "E002", "Martin", "Sophie", "514-234-5678", 30, new BigDecimal(4500), LocalDate.of(2012, 3, 15));
 
         // Création de salles
-        Salle salle1 = new Salle(1, "S001", 3);
+        Salle salle1 = new Salle(1, "S001", 10);
         Salle salle2 = new Salle(2, "S002", 100);
 
         // Création de cours

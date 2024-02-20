@@ -117,11 +117,10 @@ public class Classe {
     public boolean salleCapaciteOK(Salle salle) {
         int capaciteTotale = 0;
         for (SalleEtHeures salleEtHeures : salleEtHeuresList) {
-            if (salleEtHeures.getSalle().equals(salle)) {
-                capaciteTotale += salleEtHeures.getSalle().getCapacite();
-            }
+            capaciteTotale += salleEtHeures.getSalle().getCapacite() * salleEtHeures.getHeures();
         }
-        return capaciteTotale <= nbreEleve;
+        capaciteTotale += salle.getCapacite();
+        return capaciteTotale >= nbreEleve;
     }
 
 
