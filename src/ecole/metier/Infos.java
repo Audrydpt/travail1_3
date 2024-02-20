@@ -138,9 +138,5 @@ class Infos {
         return Objects.hash(id);
     }
 
-    @Override
-    public String toString() {
-        return "Infos - Enseignant: " + enseignant.getNom() + ", Salle: " + salle.getSigle() + ", Heures: " + nbHeures;
-    }
 
 }

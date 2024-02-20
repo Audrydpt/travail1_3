@@ -21,9 +21,5 @@ public class EnseignantEtHeures {
         return heures;
     }
 
-    @Override
-    public String toString() {
-        return "Enseignant: " + enseignant.getNom() + ", Heures: " + heures;
-    }
 
 }

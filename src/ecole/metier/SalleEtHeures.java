@@ -20,8 +20,5 @@ public class SalleEtHeures {
     public int getHeures() {
         return heures;
     }
-    @Override
-    public String toString() {
-        return "Salle: " + salle.getSigle() + ", Heures: " + heures;
-    }
+
 }

@@ -25,9 +25,4 @@ public class CoursEtHeures {
         this.heures = heures;
     }
 
-    @Override
-    public String toString() {
-        return "Cours: " + cours.getIntitule() + ", Heures: " + heures;
-    }
-
 }
