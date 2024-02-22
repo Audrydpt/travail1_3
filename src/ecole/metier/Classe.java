@@ -56,20 +56,21 @@ public class Classe {
     /**
      * Liste des informations générales de la classe
      */
-    protected List<Infos> infoList=new ArrayList<>();
+    protected List<Infos> infoList = new ArrayList<>();
 
-
-
-
+    /**
+     * Compteur d'identifiant pour les informations
+     */
+    private static int u_idcpt = 1;
 
     /**
      * Constructeur de la classe avec l'identifiant
      *
-     * @param id          Identifiant numérique de la classe
-     * @param sigle       Sigle de la classe
-     * @param annee       Année de la classe
-     * @param specialite  Spécialité de la classe
-     * @param nbreEleve   Nombre d'élèves dans la classe
+     * @param id         Identifiant numérique de la classe
+     * @param sigle      Sigle de la classe
+     * @param annee      Année de la classe
+     * @param specialite Spécialité de la classe
+     * @param nbreEleve  Nombre d'élèves dans la classe
      */
     public Classe(int id, String sigle, int annee, String specialite, int nbreEleve) {
         this.id = id;
@@ -78,7 +79,6 @@ public class Classe {
         this.specialite = specialite;
         this.nbreEleve = nbreEleve;
     }
-
 
     /**
      * Obtient Info de la classe
@@ -101,7 +101,6 @@ public class Classe {
         }
         return totalHeures;
     }
-
 
     /**
      * Récupère la liste des cours et de leurs heures dans la classe
@@ -156,8 +155,6 @@ public class Classe {
         return capaciteTotale >= nbreEleve;
     }
 
-
-
     /**
      * Ajoute un cours à la classe avec le nombre d'heures spécifié
      *
@@ -165,10 +162,9 @@ public class Classe {
      * @param heures Le nombre d'heures pour ce cours
      */
     public void addCours(Cours cours, int heures) {
-        CoursEtHeures coursEtHeures = new CoursEtHeures(cours, heures);
-        coursEtHeuresList.add(coursEtHeures);
+        Infos infos = new Infos(u_idcpt++, null, null, cours, heures);
+        infoList.add(infos);
     }
-
 
     /**
      * Modifie la salle par défaut d'un cours dans la classe
@@ -212,7 +208,6 @@ public class Classe {
         }
     }
 
-
     /**
      * Supprime un cours de la classe
      *
@@ -250,8 +245,4 @@ public class Classe {
     public int hashCode() {
         return Objects.hash(id);
     }
-
-
-
-
 }

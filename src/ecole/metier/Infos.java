@@ -170,8 +170,13 @@ class Infos {
      */
     @Override
     public String toString() {
-        return "\t Infos : " + id + " - " + enseignant.getNom() + " - " + salle.getSigle() + " - " + cours.getIntitule()+ " - " + nbHeures + " heures \n";
+        String enseignantNom = (enseignant != null) ? enseignant.getNom() : "Aucun enseignant";
+
+        return "\t Infos : " + id + " - " + enseignantNom + " - " + ((salle != null) ? salle.getSigle() : "Aucune salle")
+                + " - " + ((cours != null) ? cours.getIntitule() : "Aucun cours") + " - " + nbHeures + " heures \n";
+        //affichage généré par chatgpt
     }
+
 
 
 
