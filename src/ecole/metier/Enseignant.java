@@ -6,9 +6,6 @@ import java.util.Objects;
 
 /**
  * La classe Enseignant représente un enseignant de l'école
- * Chaque enseignant est caractérisé par un identifiant unique, un matricule,
- * un nom, un prénom, un numéro de téléphone, une charge de travail par semaine,
- * un salaire mensuel et une date d'engagement
  *
  * @author Audry Dupont
  * @version 1.0
@@ -59,6 +56,7 @@ public class Enseignant {
     /**
      * Constructeur de la classe Enseignant
      *
+     * @param id               Identifiant unique de l'enseignant
      * @param matricule        Matricule de l'enseignant
      * @param nom              Nom de l'enseignant
      * @param prenom           Prénom de l'enseignant
@@ -67,15 +65,6 @@ public class Enseignant {
      * @param salaireMensuel   Salaire mensuel de l'enseignant
      * @param dateEngagement   Date d'engagement de l'enseignant
      */
-    public Enseignant(String matricule, String nom, String prenom, String tel, int chargeSem, BigDecimal salaireMensuel, LocalDate dateEngagement) {
-        this.matricule = matricule;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.tel = tel;
-        this.chargeSem = chargeSem;
-        this.salaireMensuel = salaireMensuel;
-        this.dateEngagement = dateEngagement;
-    }
 
     public Enseignant(int id, String matricule, String nom, String prenom, String tel, int chargeSem, BigDecimal salaireMensuel, LocalDate dateEngagement) {
         this.id = id;

@@ -3,16 +3,13 @@ package ecole.metier;
 import java.util.Objects;
 
 /**
- * La classe Infos représente les informations générales
- * Chaque instance d'Infos est caractérisée par un identifiant unique, un enseignant,
- * une salle et le nombre d'heures attribuées.
+ * La classe Infos représente les informations générales d'un cours dans l'école
  *
  * @author Audry Dupont
  * @version 1.0
  * @see Enseignant
  * @see Salle
  * @see Classe
- * @see Cours
  */
 class Infos {
     /**
@@ -30,6 +27,12 @@ class Infos {
      */
     protected Salle salle;
 
+
+    /**
+     * Cours associé aux informations
+     */
+    protected Cours cours;
+
     /**
      * Nombre d'heures attribuées
      */
@@ -37,17 +40,19 @@ class Infos {
 
     /**
      * Constructeur de la classe Infos
-        *
-        * @param id         Identifiant unique de l'ensemble d'informations
-        * @param enseignant Enseignant associé aux informations
-        * @param salle      Salle associée aux informations
-        * @param nbHeures   Nombre d'heures attribuées
-        */
+     *
+     * @param id         Identifiant unique de l'ensemble d'informations
+     * @param enseignant Enseignant associé aux informations
+     * @param salle      Salle associée aux informations
+     * @param cours      Cours associé aux informations
+     * @param nbHeures   Nombre d'heures attribuées
+     */
 
-    public Infos(int id, Enseignant enseignant, Salle salle, int nbHeures) {
+    public Infos(int id, Enseignant enseignant, Salle salle, Cours cours, int nbHeures) {
         this.id = id;
         this.enseignant = enseignant;
         this.salle = salle;
+        this.cours = cours;
         this.nbHeures = nbHeures;
     }
 
@@ -114,6 +119,26 @@ class Infos {
         this.salle = salle;
     }
 
+
+    /**
+     * Obtient le cours associé aux informations
+     *
+     * @return Le cours associé
+     */
+    public Cours getCours() {
+        return cours;
+    }
+
+    /**
+     * Modifie le cours associé aux informations
+     * @param cours
+     */
+    public void setCours(Cours cours) {
+        this.cours = cours;
+    }
+
+
+
     /**
      * Compare ces informations à un autre objet
      *
@@ -137,6 +162,32 @@ class Infos {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    /**
+     * Représentation textuelle des informations
+     *
+     * @return La représentation textuelle
+     */
+    @Override
+    public String toString() {
+        return "\t Infos : " + id + " - " + enseignant.getNom() + " - " + salle.getSigle() + " - " + cours.getIntitule()+ " - " + nbHeures + " heures \n";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

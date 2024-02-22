@@ -4,13 +4,10 @@ import java.util.Objects;
 
 /**
  * La classe Cours représente un cours dans l'école
- * Chaque cours est caractérisé par un identifiant unique, un code, un intitulé,
- * une salle par défaut et des informations spécifiques
  *
  * @author Audry Dupont
  * @version 1.0
  * @see Infos
- * @see Classe
  * @see Salle
  */
 public class Cours {
@@ -34,19 +31,14 @@ public class Cours {
      */
     protected Salle salleParDefault;
 
-
     /**
-     * Constructeur de la classe Cours avec un identifiant
+     * Constructeur de la classe Cours
      *
-     * @param id       Identifiant du cours
-     * @param code     Code du cours
-     * @param intitule Intitulé du cours
+     * @param id               Identifiant unique du cours
+     * @param code             Code du cours
+     * @param intitule         Intitulé du cours
+     * @param salleParDefault  Salle par défaut du cours
      */
-    public Cours(int id, String code, String intitule) {
-        this.id = id;
-        this.code = code;
-        this.intitule = intitule;
-    }
 
     public Cours(int id, String code, String intitule, Salle salleParDefault) {
         this.id = id;
@@ -54,6 +46,8 @@ public class Cours {
         this.intitule = intitule;
         this.salleParDefault = salleParDefault;
     }
+
+
 
     /**
      * Obtient l'identifiant du cours
@@ -100,6 +94,7 @@ public class Cours {
         this.salleParDefault = salleParDefault;
     }
 
+
     /**
      * Compare ce cours à un autre objet
      *
@@ -122,5 +117,18 @@ public class Cours {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+
+    /**
+     * Représentation textuelle du cours
+     *
+     * @return La représentation textuelle
+     */
+    @Override
+    public String toString() {
+        return "Cours{" +
+                "salleParDefault=" + salleParDefault +
+                '}';
     }
 }

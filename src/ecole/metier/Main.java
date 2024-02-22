@@ -7,48 +7,102 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        // Création d'une classe
-        Classe classe1 = new Classe(1, "A", 2024, "Informatique", 4000);
-        Classe classe2 = new Classe(2, "B", 2024, "Math", 40);
+        // Création de la liste des enseignants
+        List<Enseignant> enseignants = List.of(
+                new Enseignant(1, "E001", "DUPONT", "Audry", "01 02 03 04 05", 35, new BigDecimal(2000), LocalDate.of(2010, 1, 1)),
+                new Enseignant(2, "E002", "DURAND", "Jean", "06 07 08 09 10", 35, new BigDecimal(2000), LocalDate.of(2010, 1, 1)),
+                new Enseignant(3, "E003", "DUBOIS", "Marie", "11 12 13 14 15", 35, new BigDecimal(2000), LocalDate.of(2010, 1, 1))
+        );
 
-        // Création d'enseignants
-        Enseignant enseignant1 = new Enseignant(1, "E001", "Dupont", "Audry", "514-123-4567", 35, new BigDecimal(5000), LocalDate.of(2010, 1, 1));
-        Enseignant enseignant2 = new Enseignant(2, "E002", "Martin", "Sophie", "514-234-5678", 30, new BigDecimal(4500), LocalDate.of(2012, 3, 15));
+            // Création de la liste des salles
+            List<Salle> salles = List.of(
+                    new Salle(1, "S1", 10),
+                    new Salle(2, "S2", 40),
+                    new Salle(3, "S3", 40)
+            );
 
-        // Création de salles
-        Salle salle1 = new Salle(1, "S001", 10);
-        Salle salle2 = new Salle(2, "S002", 100);
+            // Création de la liste des cours
+            List<Cours> cours = List.of(
+                    new Cours(1, "M1", "Mathématiques", salles.get(0)),
+                    new Cours(2, "F1", "Français", salles.get(1)),
+                    new Cours(3, "A1", "Anglais", salles.get(2))
+            );
 
-        // Création de cours
-        Cours cours1 = new Cours(1, "C001", "Programmation orientée objet", salle1);
-        Cours cours2 = new Cours(2, "C002", "Base de données", salle2);
+            // Création de la liste des classes
+            List<Classe> classes = List.of(
+                    new Classe(1, "C1", 1, "1ère", 30),
+                    new Classe(2, "C2", 2, "2ème", 30),
+                    new Classe(3, "C3", 3, "3ème", 30)
+            );
 
-        classe1.addCours(cours1, 5);
-        classe1.addCours(cours2, 4);
+            // Création de la liste des informations
+            List<Infos> infos = List.of(
+                    new Infos(1, enseignants.get(0), salles.get(0), cours.get(0), 10),
+                    new Infos(2, enseignants.get(1), salles.get(1), cours.get(1), 10),
+                    new Infos(3, enseignants.get(2), salles.get(2), cours.get(2), 10)
+            );
 
-        // Affichage des informations
-        System.out.println("Liste des cours et heures : " + classe1.listeCoursEtHeures());
-        System.out.println("Nombre total d'heures : " + classe1.nbrHeuresTot());
+            // Création de la liste des cours et heures
+            List<CoursEtHeures> coursEtHeures = List.of(
+                    new CoursEtHeures(cours.get(0), 10),
+                    new CoursEtHeures(cours.get(1), 10),
+                    new CoursEtHeures(cours.get(2), 10)
+            );
 
-        // Vérification de la capacité de la salle
-        System.out.println("Capacité de la salle 1 OK : " + classe1.salleCapaciteOK(salle1));
-        System.out.println("Capacité de la salle 2 OK : " + classe2.salleCapaciteOK(salle2));
+            // Création de la liste des enseignants et heures
+            List<EnseignantEtHeures> enseignantEtHeures = List.of(
+                    new EnseignantEtHeures(enseignants.get(0), 10),
+                    new EnseignantEtHeures(enseignants.get(1), 10),
+                    new EnseignantEtHeures(enseignants.get(2), 10)
+            );
 
-        // Modification du nombre d'heures d'un cours
-        classe1.modifCours(cours1, 10);
+            // Création de la liste des salles et heures
+            List<SalleEtHeures> salleEtHeures = List.of(
+                    new SalleEtHeures(salles.get(0), 10),
+                    new SalleEtHeures(salles.get(1), 10),
+                    new SalleEtHeures(salles.get(2), 10)
+            );
 
-        System.out.println("Liste des cours et heures après modifications : " + classe1.listeCoursEtHeures());
+            // Modification de la liste des informations
+            infos.get(0).setNbHeures(20);
+            infos.get(1).setNbHeures(20);
+            infos.get(2).setNbHeures(20);
 
-        // Suppression d'un cours
-        classe1.suppCours(cours1);
+            // Modification de la liste des infos (Enseignant)
+            infos.get(0).setEnseignant(enseignants.get(1));
+            infos.get(1).setEnseignant(enseignants.get(2));
+            infos.get(2).setEnseignant(enseignants.get(0));
 
-        System.out.println("Liste des cours et heures après suppression : " + classe1.listeCoursEtHeures());
+            // Modification de la liste des infos (Salle)
+            infos.get(0).setSalle(salles.get(1));
+            infos.get(1).setSalle(salles.get(2));
+            infos.get(2).setSalle(salles.get(0));
 
-        //cration infos
-        Infos info1 = new Infos(1, enseignant1, salle1, 10);
-        Infos info2 = new Infos(2, enseignant2, salle2, 8);
 
-        //affichage infos
-        System.out.println("Liste des infos : " + classe1.listeInfos());
+            //Affichage des informations
+            System.out.println("Liste des enseignants : " + enseignants);
+            System.out.println("Liste des salles : " + salles);
+            System.out.println("Liste des cours : " + cours);
+            System.out.println("Liste des classes : " + classes);
+            System.out.println("Liste des informations : " + infos);
+            System.out.println("Liste des cours et heures : " + coursEtHeures);
+            System.out.println("Liste des enseignants et heures : " + enseignantEtHeures);
+            System.out.println("Liste des salles et heures : " + salleEtHeures);
+
+            //test capcite sallevec fonctiion boolean
+            System.out.println("Capacité de la salle 1 : " + classes.get(0).salleCapaciteOK(salles.get(0)));
+            System.out.println("Capacité de la salle 2 : " + classes.get(0).salleCapaciteOK(salles.get(1)));
+            System.out.println("Capacité de la salle 3 : " + classes.get(0).salleCapaciteOK(salles.get(2)));
+
+            //suppression d un cours avec fonction supprimer
+            classes.get(0).supprCours(cours.get(0));
+
+
+
+
+
+
+
+
     }
 }

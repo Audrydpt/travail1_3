@@ -30,13 +30,10 @@ public class Salle {
     /**
      * Constructeur de la salle avec un sigle et une capacité
      *
+     * @param id       Identifiant numérique de la salle
      * @param sigle    Le sigle de la salle
      * @param capacite La capacité d'accueil de la salle
      */
-    public Salle(String sigle, int capacite) {
-        this.sigle = sigle;
-        this.capacite = capacite;
-    }
 
 
     public Salle(int id, String sigle, int capacite) {

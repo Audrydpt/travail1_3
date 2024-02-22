@@ -9,9 +9,6 @@ import java.util.Objects;
  *
  * @author Audry Dupont
  * @version 1.0
- * @see Cours
- * @see Enseignant
- * @see Salle
  * @see Infos
  */
 public class Classe {
@@ -40,10 +37,29 @@ public class Classe {
      * Nombre d'élèves dans la classe
      */
     protected int nbreEleve;
+
+    /**
+     * Liste des cours et de leurs heures dans la classe
+     */
     protected List<CoursEtHeures> coursEtHeuresList = new ArrayList<>();
+
+    /**
+     * Liste des enseignants et de leurs heures dans la classe
+     */
     protected List<EnseignantEtHeures> enseignantEtHeuresList = new ArrayList<>();
+
+    /**
+     * Liste des salles et de leurs heures dans la classe
+     */
     protected List<SalleEtHeures> salleEtHeuresList = new ArrayList<>();
+
+    /**
+     * Liste des informations générales de la classe
+     */
     protected List<Infos> infoList=new ArrayList<>();
+
+
+
 
 
     /**
@@ -64,18 +80,28 @@ public class Classe {
     }
 
 
-
+    /**
+     * Obtient Info de la classe
+     *
+     * @return Info de la classe
+     */
     public List<Infos> getInfo() {
         return infoList;
     }
 
+    /**
+     * Obtient le nombre d'heures totales de la classe
+     *
+     * @return Nombre d'heures totales
+     */
     public int nbrHeuresTot() {
         int totalHeures = 0;
-        for (CoursEtHeures coursEtHeures : coursEtHeuresList ) {
-            totalHeures += coursEtHeures.getHeures();
+        for (Infos infos : infoList) {
+            totalHeures += infos.getNbHeures();
         }
         return totalHeures;
     }
+
 
     /**
      * Récupère la liste des cours et de leurs heures dans la classe
@@ -104,6 +130,11 @@ public class Classe {
         return salleEtHeuresList;
     }
 
+    /**
+     * Récupère la liste des informations de la classe
+     *
+     * @return Liste des informations
+     */
     public List<Infos> listeInfos() {
         return infoList;
     }
@@ -112,16 +143,19 @@ public class Classe {
      * Vérifie si la capacité d'une salle est suffisante pour la classe
      *
      * @param salle La salle à vérifier
-     * @return true si la capacité est suffisante, false sinon
+     * @return true si la capacité est suffisante, false si insuffisante
      */
     public boolean salleCapaciteOK(Salle salle) {
         int capaciteTotale = 0;
-        for (SalleEtHeures salleEtHeures : salleEtHeuresList) {
-            capaciteTotale += salleEtHeures.getSalle().getCapacite() * salleEtHeures.getHeures();
+        for (Infos infos : infoList) {
+            if (infos.getSalle().equals(salle)) {
+                capaciteTotale += infos.getSalle().getCapacite() * infos.getNbHeures();
+            }
         }
         capaciteTotale += salle.getCapacite();
         return capaciteTotale >= nbreEleve;
     }
+
 
 
     /**
@@ -135,6 +169,7 @@ public class Classe {
         coursEtHeuresList.add(coursEtHeures);
     }
 
+
     /**
      * Modifie la salle par défaut d'un cours dans la classe
      *
@@ -142,9 +177,23 @@ public class Classe {
      * @param salle La nouvelle salle par défaut
      */
     public void modifCours(Cours cours, Salle salle) {
-        for (CoursEtHeures coursEtHeures : coursEtHeuresList) {
-            if (coursEtHeures.getCours().equals(cours)) {
-                coursEtHeures.getCours().setSalleParDefault(salle);
+        for (Infos infos : infoList) {
+            if (infos.getCours().equals(cours)) {
+                infos.setSalle(salle);
+            }
+        }
+    }
+
+    /**
+     * Modifie l'enseignant d'un cours dans la classe
+     *
+     * @param cours      Le cours à modifier
+     * @param enseignant Le nouvel enseignant
+     */
+    public void modifCours(Cours cours, Enseignant enseignant) {
+        for (Infos infos : infoList) {
+            if (infos.getCours().equals(cours)) {
+                infos.setEnseignant(enseignant);
             }
         }
     }
@@ -156,20 +205,26 @@ public class Classe {
      * @param heures Le nouveau nombre d'heures
      */
     public void modifCours(Cours cours, int heures) {
-        for (CoursEtHeures coursEtHeures : coursEtHeuresList) {
-            if (coursEtHeures.getCours().equals(cours)) {
-                coursEtHeures.setHeures(heures);
+        for (Infos infos : infoList) {
+            if (infos.getCours().equals(cours)) {
+                infos.setNbHeures(heures);
             }
         }
     }
+
 
     /**
      * Supprime un cours de la classe
      *
      * @param cours Le cours à supprimer
      */
-    public void suppCours(Cours cours) {
-        coursEtHeuresList.removeIf(coursEtHeures -> coursEtHeures.getCours().equals(cours));
+    public void supprCours(Cours cours) {
+        for (Infos infos : infoList) {
+            if (infos.getCours().equals(cours)) {
+                infoList.remove(infos);
+                break;
+            }
+        }
     }
 
     /**
@@ -195,4 +250,8 @@ public class Classe {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
+
+
 }
