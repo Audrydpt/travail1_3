@@ -61,7 +61,7 @@ public class Classe {
     /**
      * Compteur d'identifiant pour les informations
      */
-    private static int u_idcpt = 1;
+    private static int idcpt = 1;
 
     /**
      * Constructeur de la classe avec l'identifiant
@@ -138,6 +138,7 @@ public class Classe {
         return infoList;
     }
 
+
     /**
      * Vérifie si la capacité d'une salle est suffisante pour la classe
      *
@@ -146,9 +147,13 @@ public class Classe {
      */
     public boolean salleCapaciteOK(Salle salle) {
         int capaciteTotale = 0;
+        if (salle == null) {
+            return false;
+        }
         for (Infos infos : infoList) {
-            if (infos.getSalle().equals(salle)) {
-                capaciteTotale += infos.getSalle().getCapacite() * infos.getNbHeures();
+            Salle salleInfo = infos.getSalle();
+            if (salleInfo != null && salleInfo.equals(salle) && !salleInfo.equals(salle)) {
+                capaciteTotale += salleInfo.getCapacite() * infos.getNbHeures();
             }
         }
         capaciteTotale += salle.getCapacite();
@@ -162,7 +167,7 @@ public class Classe {
      * @param heures Le nombre d'heures pour ce cours
      */
     public void addCours(Cours cours, int heures) {
-        Infos infos = new Infos(u_idcpt++, null, null, cours, heures);
+        Infos infos = new Infos(idcpt++, null, null, cours, heures);
         infoList.add(infos);
     }
 
@@ -173,6 +178,12 @@ public class Classe {
      * @param salle La nouvelle salle par défaut
      */
     public void modifCours(Cours cours, Salle salle) {
+        for (Infos infos : infoList) {
+            if (!infos.getCours().equals(cours) && infos.getSalle() != null && infos.getSalle().equals(salle)) {
+                System.out.println("Erreur : La salle est déjà attribuée à un autre cours");
+                return;
+            }
+        }
         for (Infos infos : infoList) {
             if (infos.getCours().equals(cours)) {
                 infos.setSalle(salle);
@@ -188,11 +199,18 @@ public class Classe {
      */
     public void modifCours(Cours cours, Enseignant enseignant) {
         for (Infos infos : infoList) {
+            if (!infos.getCours().equals(cours) && infos.getEnseignant() != null && infos.getEnseignant().equals(enseignant)) {
+                System.out.println("Erreur : L'enseignant est déjà attribué à un autre cours");
+                return;
+            }
+        }
+        for (Infos infos : infoList) {
             if (infos.getCours().equals(cours)) {
                 infos.setEnseignant(enseignant);
             }
         }
     }
+
 
     /**
      * Modifie le nombre d'heures d'un cours dans la classe
