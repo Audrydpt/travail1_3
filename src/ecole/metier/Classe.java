@@ -1,8 +1,6 @@
 package ecole.metier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Représente une classe dans une école avec ses propriétés
@@ -39,29 +37,9 @@ public class Classe {
     protected int nbreEleve;
 
     /**
-     * Liste des cours et de leurs heures dans la classe
-     */
-    protected List<CoursEtHeures> coursEtHeuresList = new ArrayList<>();
-
-    /**
-     * Liste des enseignants et de leurs heures dans la classe
-     */
-    protected List<EnseignantEtHeures> enseignantEtHeuresList = new ArrayList<>();
-
-    /**
-     * Liste des salles et de leurs heures dans la classe
-     */
-    protected List<SalleEtHeures> salleEtHeuresList = new ArrayList<>();
-
-    /**
      * Liste des informations générales de la classe
      */
     protected List<Infos> infoList = new ArrayList<>();
-
-    /**
-     * Compteur d'identifiant pour les informations
-     */
-    private static int idcpt = 1;
 
     /**
      * Constructeur de la classe avec l'identifiant
@@ -108,6 +86,16 @@ public class Classe {
      * @return Liste des cours et de leurs heures
      */
     public List<CoursEtHeures> listeCoursEtHeures() {
+        List<CoursEtHeures> coursEtHeuresList = new ArrayList<>();
+
+        for (Infos infos : infoList) {
+            Cours cours = infos.getCours();
+            if (cours != null) {
+                CoursEtHeures coursEtHeures = new CoursEtHeures(cours, infos.getNbHeures());
+                coursEtHeuresList.add(coursEtHeures);
+            }
+        }
+
         return coursEtHeuresList;
     }
 
@@ -116,8 +104,20 @@ public class Classe {
      *
      * @return Liste des enseignants et de leurs heures
      */
-    public List<EnseignantEtHeures> listeEnseignantHeures() {
-        return enseignantEtHeuresList;
+    public Map<Enseignant, Integer> listeEnseignantHeures() {
+        Map<Enseignant, Integer> enseignantHeuresMap = new HashMap<>();
+
+        for (Infos infos : infoList) {
+            Enseignant enseignant = infos.getEnseignant();
+            if (enseignant != null) {
+                enseignantHeuresMap.put(enseignant, enseignantHeuresMap.getOrDefault(enseignant, 0) + infos.getNbHeures());
+            }
+        }
+
+        return enseignantHeuresMap;
+
+        //recherhe sur internet pour touver moyen d'empecher "doublons" dans les listes, donc utilisation de Map au lieu de ArrayList
+        //mais si pas autorisé, on peut utiliser ArrayList
     }
 
     /**
@@ -125,8 +125,21 @@ public class Classe {
      *
      * @return Liste des salles et de leurs heures
      */
-    public List<SalleEtHeures> listeSallesEtHeures() {
-        return salleEtHeuresList;
+    public Map<Salle, Integer> listeSallesEtHeures() {
+        Map<Salle, Integer> salleHeuresMap = new HashMap<>();
+
+        for (Infos infos : infoList) {
+            Salle salle = infos.getSalle();
+            if (salle != null) {
+                salleHeuresMap.put(salle, salleHeuresMap.getOrDefault(salle, 0) + infos.getNbHeures());
+            }
+        }
+
+        return salleHeuresMap;
+
+        //recherhe sur internet pour touver moyen d'empecher "doublons" dans les listes, donc utilisation de Map au lieu de ArrayList
+        //mais si pas autorisé, on peut utiliser ArrayList
+
     }
 
     /**
@@ -146,18 +159,8 @@ public class Classe {
      * @return true si la capacité est suffisante, false si insuffisante
      */
     public boolean salleCapaciteOK(Salle salle) {
-        int capaciteTotale = 0;
-        if (salle == null) {
-            return false;
-        }
-        for (Infos infos : infoList) {
-            Salle salleInfo = infos.getSalle();
-            if (salleInfo != null && salleInfo.equals(salle) && !salleInfo.equals(salle)) {
-                capaciteTotale += salleInfo.getCapacite() * infos.getNbHeures();
-            }
-        }
-        capaciteTotale += salle.getCapacite();
-        return capaciteTotale >= nbreEleve;
+        int capacite = salle.getCapacite();
+        return capacite >= nbreEleve;
     }
 
     /**
@@ -167,7 +170,7 @@ public class Classe {
      * @param heures Le nombre d'heures pour ce cours
      */
     public void addCours(Cours cours, int heures) {
-        Infos infos = new Infos(idcpt++, null, null, cours, heures);
+        Infos infos = new Infos(Infos.getIdcpt(), null, null, cours, heures);
         infoList.add(infos);
     }
 
@@ -178,12 +181,6 @@ public class Classe {
      * @param salle La nouvelle salle par défaut
      */
     public void modifCours(Cours cours, Salle salle) {
-        for (Infos infos : infoList) {
-            if (!infos.getCours().equals(cours) && infos.getSalle() != null && infos.getSalle().equals(salle)) {
-                System.out.println("Erreur : La salle est déjà attribuée à un autre cours");
-                return;
-            }
-        }
         for (Infos infos : infoList) {
             if (infos.getCours().equals(cours)) {
                 infos.setSalle(salle);
@@ -198,12 +195,6 @@ public class Classe {
      * @param enseignant Le nouvel enseignant
      */
     public void modifCours(Cours cours, Enseignant enseignant) {
-        for (Infos infos : infoList) {
-            if (!infos.getCours().equals(cours) && infos.getEnseignant() != null && infos.getEnseignant().equals(enseignant)) {
-                System.out.println("Erreur : L'enseignant est déjà attribué à un autre cours");
-                return;
-            }
-        }
         for (Infos infos : infoList) {
             if (infos.getCours().equals(cours)) {
                 infos.setEnseignant(enseignant);
@@ -232,13 +223,16 @@ public class Classe {
      * @param cours Le cours à supprimer
      */
     public void supprCours(Cours cours) {
-        for (Infos infos : infoList) {
+        Iterator<Infos> iterator = infoList.iterator();
+        while (iterator.hasNext()) {
+            Infos infos = iterator.next();
             if (infos.getCours().equals(cours)) {
-                infoList.remove(infos);
+                iterator.remove();
                 break;
             }
         }
     }
+
 
     /**
      * Compare cette classe à un autre objet

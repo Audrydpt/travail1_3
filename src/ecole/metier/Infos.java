@@ -11,11 +11,15 @@ import java.util.Objects;
  * @see Salle
  * @see Classe
  */
-class Infos {
+public class Infos {
     /**
      * Identifiant unique de l'ensemble d'informations
      */
     protected int id;
+    /**
+     * Compteur d'identifiant pour les informations
+     */
+    protected static int idcpt = 1;
 
     /**
      * Enseignant associé aux informations
@@ -38,6 +42,7 @@ class Infos {
      */
     protected int nbHeures;
 
+
     /**
      * Constructeur de la classe Infos
      *
@@ -49,7 +54,7 @@ class Infos {
      */
 
     public Infos(int id, Enseignant enseignant, Salle salle, Cours cours, int nbHeures) {
-        this.id = id;
+        this.id = idcpt++;
         this.enseignant = enseignant;
         this.salle = salle;
         this.cours = cours;
@@ -63,6 +68,10 @@ class Infos {
      */
     public int getId() {
         return id;
+    }
+
+    public static int getIdcpt() {
+        return idcpt;
     }
 
     /**
