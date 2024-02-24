@@ -1,6 +1,6 @@
 package ecole;
-import ecole.metier.*;
 
+import ecole.metier.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class Main {
 
 
         // Création d'une classe
-        Classe classe = new Classe(1, "SIO", 2021, "truc", 10);
+        Classe classe = new Classe(1, "API", 2024, "truc", 30);
 
         // Ajout de cours à la classe avec des heures attribuées
         classe.addCours(cours1, 10);
@@ -47,6 +47,8 @@ public class Main {
         classe.modifCours(cours2, enseignant2);
         classe.modifCours(cours3, enseignant3);
         classe.modifCours(cours4, enseignant3);
+
+
         classe.modifCours(cours2, 5);
         classe.modifCours(cours3, 10);
         classe.modifCours(cours4, 15);
@@ -96,6 +98,9 @@ public class Main {
         //test capacité salle
         System.out.println("Capacité salle1  : " + classe.salleCapaciteOK(salle1));
         System.out.println("Capacité salle2  : " + classe.salleCapaciteOK(salle2));
+        System.out.println("Capacité salle3  : " + classe.salleCapaciteOK(salle3));
+        System.out.println("Capacité salle3  : " + classe.salleCapaciteOK(salle4));
+
 
 
     }
