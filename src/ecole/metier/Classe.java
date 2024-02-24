@@ -117,7 +117,7 @@ public class Classe {
         return enseignantHeuresMap;
 
         //recherhe sur internet pour touver moyen d'empecher "doublons" dans les listes, donc utilisation de Map au lieu de ArrayList
-        //mais si pas autorisé, on peut utiliser ArrayList
+        //mais si pas autorisé ou problème que je ne connais pas, on peut utiliser ArrayList
     }
 
     /**
@@ -138,7 +138,7 @@ public class Classe {
         return salleHeuresMap;
 
         //recherhe sur internet pour touver moyen d'empecher "doublons" dans les listes, donc utilisation de Map au lieu de ArrayList
-        //mais si pas autorisé, on peut utiliser ArrayList
+        //mais si pas autorisé ou que je ne connais pas, on peut utiliser ArrayList
 
     }
 
