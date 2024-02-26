@@ -231,6 +231,11 @@ public class Classe {
                 break;
             }
         }
+
+        //autre moyen généré par chatgpt
+        /*
+        infoList.removeIf(infos -> infos.getCours().equals(cours));
+        */
     }
 
 
