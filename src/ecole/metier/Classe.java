@@ -104,6 +104,8 @@ public class Classe {
      *
      * @return Liste des enseignants et de leurs heures
      */
+
+    /*
     public Map<Enseignant, Integer> listeEnseignantHeures() {
         Map<Enseignant, Integer> enseignantHeuresMap = new HashMap<>();
 
@@ -115,16 +117,36 @@ public class Classe {
         }
 
         return enseignantHeuresMap;
+    }
 
         //recherhe sur internet pour touver moyen d'empecher "doublons" dans les listes, donc utilisation de Map au lieu de ArrayList
-        //mais si pas autorisé ou problème que je ne connais pas, on peut utiliser ArrayList
-    }
+        //mais si pas autorisé ou problème que je ne connais pas, on peut utiliser ArrayList*/
+
+        //avec List
+
+        public List<EnseignantEtHeures> listeEnseignantHeures() {
+            List<EnseignantEtHeures> enseignantHeuresList = new ArrayList<>();
+
+            for (Infos infos : infoList) {
+                Enseignant enseignant = infos.getEnseignant();
+                if (enseignant != null) {
+                    EnseignantEtHeures enseignantEtHeures = new EnseignantEtHeures(enseignant, infos.getNbHeures());
+                    enseignantHeuresList.add(enseignantEtHeures);
+                }
+
+            }
+            return enseignantHeuresList;
+        }
+
+
+
 
     /**
      * Récupère la liste des salles et de leurs heures dans la classe
      *
      * @return Liste des salles et de leurs heures
      */
+    /*
     public Map<Salle, Integer> listeSallesEtHeures() {
         Map<Salle, Integer> salleHeuresMap = new HashMap<>();
 
@@ -139,6 +161,24 @@ public class Classe {
 
         //recherhe sur internet pour touver moyen d'empecher "doublons" dans les listes, donc utilisation de Map au lieu de ArrayList
         //mais si pas autorisé ou que je ne connais pas, on peut utiliser ArrayList
+
+    }*/
+
+    //avec List
+
+    public List<SalleEtHeures> listeSallesEtHeures() {
+        List<SalleEtHeures> salleHeuresList = new ArrayList<>();
+
+        for (Infos infos : infoList) {
+            Salle salle = infos.getSalle();
+            if (salle != null) {
+                SalleEtHeures salleEtHeures = new SalleEtHeures(salle, infos.getNbHeures());
+                salleHeuresList.add(salleEtHeures);
+            }
+
+        }
+
+        return salleHeuresList;
 
     }
 
