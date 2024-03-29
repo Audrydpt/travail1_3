@@ -78,8 +78,7 @@ public class GestionClasse {
             System.out.println("Classe ajoutée avec succès");
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            System.out.println("Erreur : " +e.getMessage());        }
     }
 
     public void rechercheClasse() {
@@ -112,8 +111,7 @@ public class GestionClasse {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            System.out.println("Erreur : " +e.getMessage());        }
     }
 
 
@@ -153,7 +151,7 @@ public class GestionClasse {
             System.out.println("Classe modifiée avec succès");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Erreur : " +e.getMessage());
         }
     }
 
@@ -174,8 +172,7 @@ public class GestionClasse {
             System.out.println("Classe supprimée avec succès");
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            System.out.println("Erreur : " +e.getMessage());        }
     }
 
     private void tous() {
@@ -198,8 +195,7 @@ public class GestionClasse {
                 System.out.println("Nombre d'eleves: " + nbreleve);
             }
         } catch (SQLException e) {
-            System.out.println("erreur SQL " + e);
-        }
+            System.out.println("Erreur : " +e.getMessage());        }
 
 
     }
