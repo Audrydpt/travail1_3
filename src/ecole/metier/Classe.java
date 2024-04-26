@@ -302,4 +302,28 @@ public class Classe {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getSigle() {
+        return sigle;
+    }
+
+    public int getAnnee() {
+        return annee;
+    }
+
+    public String getSpecialite() {
+        return specialite;
+    }
+
+    public int getNbreEleve() {
+        return nbreEleve;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
