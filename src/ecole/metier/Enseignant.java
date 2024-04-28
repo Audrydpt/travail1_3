@@ -86,6 +86,10 @@ public class Enseignant {
         return id;
     }
 
+    public void setID(int id){
+        this.id = id;
+    }
+
     /**
      * Obtient le matricule de l'enseignant
      *

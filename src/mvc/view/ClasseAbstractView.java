@@ -4,6 +4,7 @@ import mvc.controller.ClasseController;
 import mvc.observer.Observer;
 import ecole.metier.Classe;
 
+
 import java.util.List;
 
 public abstract class ClasseAbstractView implements Observer{
