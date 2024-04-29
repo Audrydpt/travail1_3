@@ -47,7 +47,11 @@ public class Cours {
         this.salleParDefault = salleParDefault;
     }
 
-
+    public Cours(String code, String intitule, Salle salleParDefault) {
+        this.code = code;
+        this.intitule = intitule;
+        this.salleParDefault = salleParDefault;
+    }
 
     /**
      * Obtient l'identifiant du cours
@@ -56,6 +60,10 @@ public class Cours {
      */
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

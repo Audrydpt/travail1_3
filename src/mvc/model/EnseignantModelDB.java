@@ -56,7 +56,7 @@ public class EnseignantModelDB extends DAOEnseignant{
             } else return null;
 
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return null;
         }
     }
@@ -64,12 +64,14 @@ public class EnseignantModelDB extends DAOEnseignant{
     public boolean removeEnseignant(Enseignant enseignant) {
         String query = "delete from APIENSEIGNANT where idenseignant = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-
             pstm.setInt(1, enseignant.getId());
             int n = pstm.executeUpdate();
-            return n == 1;
-        } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
+            if (n == 1) {
+                notifyObservers();
+                return true;
+            } else return false;
+        }catch (SQLException e){
+            System.err.println("erreur sql :"+e);
             return false;
         }
     }

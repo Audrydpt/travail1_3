@@ -20,6 +20,7 @@ public class ClasseModelDB extends DAOClasse {
 
     }
 
+    @Override
     public Classe addClasse(Classe classe) {
         String query1 = "insert into APICLASSE(sigle,annee,specialite,nbreleve) values(?,?,?,?)";
         String query2 = "select idclasse from APICLASSE where sigle=?";
@@ -54,6 +55,7 @@ public class ClasseModelDB extends DAOClasse {
 
     }
 
+    @Override
     public boolean removeClasse(Classe classe) {
         String query = "delete from APICLASSE where idclasse = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
@@ -84,7 +86,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return readClasse(classe.getId());
             else return null;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return null;
         }
     }

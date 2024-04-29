@@ -42,6 +42,11 @@ public class Salle {
         this.capacite = capacite;
     }
 
+    public Salle(String sigle, int capacite) {
+        this.sigle = sigle;
+        this.capacite = capacite;
+    }
+
     /**
      * Récupère le sigle de la salle
      *
@@ -85,6 +90,10 @@ public class Salle {
      */
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
