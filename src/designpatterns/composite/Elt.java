@@ -18,7 +18,7 @@ public abstract class Elt {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 97 * hash + this.id;
+        hash = 31 * hash + this.id;
         return hash;
     }
 

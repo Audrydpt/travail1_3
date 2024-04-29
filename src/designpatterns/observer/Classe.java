@@ -1,4 +1,4 @@
-package designpatterns.composite;
+package designpatterns.observer;
 
 import ecole.metier.Infos;
 
@@ -6,21 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Classe extends Elt {
+public class Classe extends Subject{
     private int id;
     private int annee;
     private String specialite;
-    private int nbrEleve;
+    private int nbrEleves;
     List<Infos> infos = new ArrayList<>();
 
-    public Classe(int id, int annee, String specialite, int nbrEleve) {
-        super(id);
+    public Classe(int id, int annee, String specialite, int nbrEleves) {
+        this.id = id;
         this.annee = annee;
         this.specialite = specialite;
-        this.nbrEleve = nbrEleve;
+        this.nbrEleves = nbrEleves;
     }
 
-    @Override
     public int getId() {
         return id;
     }
@@ -45,12 +44,12 @@ public class Classe extends Elt {
         this.specialite = specialite;
     }
 
-    public int getNbrEleve() {
-        return nbrEleve;
+    public int getNbrEleves() {
+        return nbrEleves;
     }
 
-    public void setNbrEleve(int nbrEleve) {
-        this.nbrEleve = nbrEleve;
+    public void setNbrEleves(int nbrEleves) {
+        this.nbrEleves = nbrEleves;
     }
 
     public List<Infos> getInfos() {
@@ -61,34 +60,21 @@ public class Classe extends Elt {
         this.infos = infos;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         Classe classe = (Classe) o;
-        return id == classe.id && annee == classe.annee && nbrEleve == classe.nbrEleve && Objects.equals(specialite, classe.specialite) && Objects.equals(infos, classe.infos);
+        return id == classe.id && annee == classe.annee && nbrEleves == classe.nbrEleves && Objects.equals(specialite, classe.specialite) && Objects.equals(infos, classe.infos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, annee, specialite, nbrEleve, infos);
+        return Objects.hash(id, annee, specialite, nbrEleves, infos);
     }
 
     @Override
-    public int nbrTotEleve() {
-        return nbrEleve;
-    }
-
-    @Override
-    public String toString() {
-        return "Classe{" +
-                "id=" + id +
-                ", annee=" + annee +
-                ", specialite='" + specialite + '\'' +
-                ", nbrEleve=" + nbrEleve +
-                ", infos=" + infos +
-                '}';
+    public String getNotification() {
+        return "Classe " + id + " : " + nbrEleves + " élèves";
     }
 }

@@ -1,5 +1,7 @@
 package designpatterns.builder;
 
+import ecole.metier.Infos;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +12,7 @@ public class Classe {
     private int annee;
     private String specialite;
     private int nbreEleve;
+    List<Infos> infos = new ArrayList<>();
 
     private Classe(ClasseBuilder builder) {
         this.id = builder.id;
@@ -37,6 +40,10 @@ public class Classe {
 
     public int getNbreEleve() {
         return nbreEleve;
+    }
+
+    public List<Infos> getInfos() {
+        return infos;
     }
 
 
