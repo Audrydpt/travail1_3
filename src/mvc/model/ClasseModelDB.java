@@ -23,7 +23,7 @@ public class ClasseModelDB extends DAOClasse {
     @Override
     public Classe addClasse(Classe classe) {
         String query1 = "insert into APICLASSE(sigle,annee,specialite,nbreleve) values(?,?,?,?)";
-        String query2 = "select idclasse from APICLASSE where sigle=?";
+        String query2 = "select id_c from APICLASSE where sigle=?";
         try (java.sql.PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
              java.sql.PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
         ) {
@@ -36,8 +36,8 @@ public class ClasseModelDB extends DAOClasse {
                 pstm2.setString(1, classe.getSigle());
                 ResultSet rs = pstm2.executeQuery();
                 if (rs.next()) {
-                    int idclasse = rs.getInt(1);
-                    classe.setId(idclasse);
+                    int id_c = rs.getInt(1);
+                    classe.setId(id_c);
                     notifyObservers();
                     return classe;
                 } else {
@@ -57,7 +57,7 @@ public class ClasseModelDB extends DAOClasse {
 
     @Override
     public boolean removeClasse(Classe classe) {
-        String query = "delete from APICLASSE where idclasse = ?";
+        String query = "delete from APICLASSE where id_c = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
 
             pstm.setInt(1, classe.getId());
@@ -74,7 +74,7 @@ public class ClasseModelDB extends DAOClasse {
 
     @Override
     public Classe updateClasse(Classe classe) {
-        String query = "update APICLASSE set sigle=?, annee=?, specialite=?, nbreleve=? where idclasse=?";
+        String query = "update APICLASSE set sigle=?, annee=?, specialite=?, nbreleve=? where id_c=?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, classe.getSigle());
             pstm.setInt(2, classe.getAnnee());
@@ -92,17 +92,17 @@ public class ClasseModelDB extends DAOClasse {
     }
 
     @Override
-    public Classe readClasse(int idClasse) {
-        String query = "select * from APICLASSE where idclasse = ?";
+    public Classe readClasse(int id_c) {
+        String query = "select * from APICLASSE where id_c = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1, idClasse);
+            pstm.setInt(1, id_c);
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
                 String sigle = rs.getString("sigle");
                 int annee = rs.getInt("annee");
                 String specialite = rs.getString("specialite");
                 int nbreleve = rs.getInt("nbreleve");
-                Classe cl = new Classe(idClasse, sigle, annee, specialite, nbreleve);
+                Classe cl = new Classe(id_c, sigle, annee, specialite, nbreleve);
                 return cl;
 
             } else {
@@ -123,7 +123,7 @@ public class ClasseModelDB extends DAOClasse {
              ResultSet rs = pstm.executeQuery(query);
 
             while (rs.next()) {
-                int id = rs.getInt("idclasse");
+                int id = rs.getInt("id_c");
                 String sigle = rs.getString("sigle");
                 int annee = rs.getInt("annee");
                 String specialite = rs.getString("specialite");

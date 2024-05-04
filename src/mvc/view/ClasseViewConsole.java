@@ -21,7 +21,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     @Override
     public void affList(List l) {
-        affList(l);
+        affListe(l);
     }
 
     public void menu() {

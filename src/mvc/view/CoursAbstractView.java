@@ -9,10 +9,15 @@ import java.util.List;
 public abstract class CoursAbstractView implements Observer {
 
     protected CoursController coursController;
+    protected SalleAbstractView sav;
     protected List<Cours> lco;
 
     public void setController(CoursController coursController){
         this.coursController = coursController;
+    }
+
+    public void setSalleView(SalleAbstractView sav){
+        this.sav = sav;
     }
 
     public abstract void affMsg(String msg);

@@ -119,4 +119,9 @@ public class Salle {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "Salle ID: " + id + ", Sigle: " + sigle + ", Capacité: " + capacite;
+    }
 }

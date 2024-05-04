@@ -25,13 +25,13 @@ public class CoursViewConsole extends CoursAbstractView {
 
     @Override
     public void affList(List l) {
-        affList(l);
+        affListe(l);
     }
 
     public void menu() {
         update(coursController.getAll());
         do {
-            int ch = choixListe(Arrays.asList("ajout", "suppression", "rechercher", "modifier", "modifier salle par default", "fin"));
+            int ch = choixListe(Arrays.asList("ajout", "suppression", "rechercher", "modifier", "fin"));
             switch (ch) {
                 case 1:
                     ajouter();
@@ -46,9 +46,6 @@ public class CoursViewConsole extends CoursAbstractView {
                     modifier();
                     break;
                 case 5:
-                    modifierSalleParDefault();
-                    break;
-                case 6:
                     return;
             }
         } while (true);
@@ -59,7 +56,10 @@ public class CoursViewConsole extends CoursAbstractView {
         String code = scanner.nextLine();
         System.out.println("Intitule : ");
         String intitule = scanner.nextLine();
-        Cours cours = coursController.addCours(new Cours(code, intitule, null));
+        System.out.println("ID de la salle par défaut : ");
+        int salleId = scanner.nextInt();
+        Salle salleParDefault = salleController.getSalleById(salleId);
+        Cours cours = coursController.addCours(new Cours(code, intitule, salleParDefault));
         if (cours == null) affMsg("Ajout infructueux");
         else affMsg("Ajout effectué : " + cours);
     }
@@ -74,7 +74,7 @@ public class CoursViewConsole extends CoursAbstractView {
     public void rechercher() {
         System.out.println("idCours: ");
         int idCours = scanner.nextInt();
-        Cours cours = coursController.search(idCours);
+        coursController.search(idCours);
     }
 
     public void modifier() {
@@ -82,22 +82,15 @@ public class CoursViewConsole extends CoursAbstractView {
         Cours cours = lco.get(nl - 1);
         String code = modifyIfNotBlank("code", cours.getCode());
         String intitule = modifyIfNotBlank("intitule", cours.getIntitule());
-        Cours coursMaj = coursController.update(new Cours(cours.getId(), code, intitule, cours.getSalleParDefault()));
+        System.out.println("Nouvel ID de la salle par défaut : ");
+        int newSalleParDefaultId = scanner.nextInt();
+        Salle newSalle = salleController.getSalleById(newSalleParDefaultId);
+        Cours newCours = new Cours(cours.getId(), code, intitule, newSalle);
+        Cours coursMaj = coursController.update(newCours);
         if (coursMaj == null) affMsg("Mise à jour infructueuse");
         else affMsg("Mise à jour effectuée : " + coursMaj);
     }
 
-    public void modifierSalleParDefault() {
-        int nl = choixElt(lco);
-        Cours cours = lco.get(nl - 1);
-        System.out.println("Entrez le nouvel ID de la salle par défaut : ");
-        int newSalleParDefaultId = scanner.nextInt();
-        Salle newSalle = salleController.getSalleById(newSalleParDefaultId);
-        cours.setSalleParDefault(newSalle);
-        Cours coursMaj = coursController.update(cours);
-        if (coursMaj == null) affMsg("Mise à jour infructueuse");
-        else affMsg("Mise à jour effectuée : " + coursMaj);
-    }
 
     public Cours selectionner() {
         int nl = choixElt(lco);

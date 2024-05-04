@@ -25,10 +25,10 @@ public class CoursModelDB extends DAOCours {
 
     @Override
     public Cours addCours(Cours cours) {
-        String query1 = "insert into APICOURS(code,intitule,salledft) values(?,?,?)";
-        String query2 = "select idcours from APICOURS where code=?";
-        try (java.sql.PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
-             java.sql.PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
+        String query1 = "insert into APICOURS(CODE,INTITULE,ID_S) values(?,?,?)";
+        String query2 = "select ID_CO from APICOURS where CODE=?";
+        try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
+             PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
         ) {
             pstm1.setString(1, cours.getCode());
             pstm1.setString(2, cours.getIntitule());
@@ -57,7 +57,7 @@ public class CoursModelDB extends DAOCours {
 
     @Override
     public boolean removeCours(Cours cours) {
-        String query = "delete from APICOURS where idcours = ?";
+        String query = "delete from APICOURS where id_co = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1, cours.getId());
             int n = pstm.executeUpdate();
@@ -74,7 +74,7 @@ public class CoursModelDB extends DAOCours {
 
     @Override
     public Cours updateCours(Cours cours) {
-        String query = "update APICOURS set code=?,intitule=?,salledft=? where idcours=?";
+        String query = "update APICOURS set code=?,intitule=?,id_s=? where id_co=?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, cours.getCode());
             pstm.setString(2, cours.getIntitule());
@@ -92,14 +92,14 @@ public class CoursModelDB extends DAOCours {
 
     @Override
     public Cours readCours(int id) {
-        String query = "select * from APICOURS where idcours = ?";
+        String query = "select * from APICOURS where id_co = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1, id);
             try (ResultSet rs = pstm.executeQuery()) {
                 if (rs.next()) {
                     String code = rs.getString("code");
                     String intitule = rs.getString("intitule");
-                    int idsalle = rs.getInt("salledft");
+                    int idsalle = rs.getInt("id_s");
                     Salle salleParDefault = salleController.getSalleById(idsalle);
                     Cours c = new Cours(id, code, intitule, salleParDefault);
                     return c;
@@ -115,6 +115,7 @@ public class CoursModelDB extends DAOCours {
         return null;
     }
 
+
     @Override
     public List<Cours> getCours() {
         List<Cours> lco = new ArrayList<>();
@@ -122,10 +123,10 @@ public class CoursModelDB extends DAOCours {
         try (Statement stm = dbConnect.createStatement();
              ResultSet rs = stm.executeQuery(query)) {
             while (rs.next()) {
-                int id = rs.getInt("idcours");
+                int id = rs.getInt("id_co");
                 String code = rs.getString("code");
                 String intitule = rs.getString("intitule");
-                int idsalle = rs.getInt("salledft");
+                int idsalle = rs.getInt("id_s");
                 Salle salleParDefault = salleController.getSalleById(idsalle);
                 Cours c = new Cours(id, code, intitule, salleParDefault);
                 lco.add(c);

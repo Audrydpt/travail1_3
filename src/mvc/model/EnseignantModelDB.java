@@ -28,7 +28,7 @@ public class EnseignantModelDB extends DAOEnseignant{
 
     public Enseignant addEnseignant(Enseignant enseignant) {
         String query1 = "insert into APIENSEIGNANT(matricule,nom,prenom,tel,chargesem,salairemen,dateengagement) values(?,?,?,?,?,?,?)";
-        String query2 = "select idenseignant from APIENSEIGNANT where matricule=?";
+        String query2 = "select id_e from APIENSEIGNANT where matricule=?";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
              PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
         ) {
@@ -44,8 +44,8 @@ public class EnseignantModelDB extends DAOEnseignant{
                 pstm2.setString(1, enseignant.getMatricule());
                 ResultSet rs = pstm2.executeQuery();
                 if (rs.next()) {
-                    int idenseignant = rs.getInt(1);
-                    enseignant.setID(idenseignant);
+                    int id_e = rs.getInt(1);
+                    enseignant.setID(id_e);
                     notifyObservers();
                     return enseignant;
                 } else {
@@ -62,7 +62,7 @@ public class EnseignantModelDB extends DAOEnseignant{
     }
 
     public boolean removeEnseignant(Enseignant enseignant) {
-        String query = "delete from APIENSEIGNANT where idenseignant = ?";
+        String query = "delete from APIENSEIGNANT where id_e = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1, enseignant.getId());
             int n = pstm.executeUpdate();
@@ -99,7 +99,7 @@ public class EnseignantModelDB extends DAOEnseignant{
     }
 
     public Enseignant readEnseignant(int id) {
-        String query = "select * from APIENSEIGNANT where idenseignant = ?";
+        String query = "select * from APIENSEIGNANT where id_e = ?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1, id);
             ResultSet rs = pstm.executeQuery();
@@ -130,7 +130,7 @@ public class EnseignantModelDB extends DAOEnseignant{
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
 
-                int id = rs.getInt("idenseignant");
+                int id = rs.getInt("id_e");
                 String matricule = rs.getString("matricule");
                 String nom = rs.getString("nom");
                 String prenom = rs.getString("prenom");

@@ -1,7 +1,6 @@
 package mvc.controller;
 
 import ecole.metier.Cours;
-import ecole.metier.Salle;
 import mvc.model.DAOCours;
 import mvc.view.CoursAbstractView;
 
@@ -38,14 +37,6 @@ public class CoursController {
     }
 
 
-    public Salle getSalleParDefault(Cours cours) {
-        return cours.getSalleParDefault();
-    }
-
-    public void updateSalleParDefault(Cours cours, Salle newSalle) {
-        cours.setSalleParDefault(newSalle);
-        // Enregistrez le cours mis à jour dans la base de données
-    }
 
 
 
