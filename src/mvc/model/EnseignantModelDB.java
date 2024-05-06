@@ -27,7 +27,7 @@ public class EnseignantModelDB extends DAOEnseignant{
 
 
     public Enseignant addEnseignant(Enseignant enseignant) {
-        String query1 = "insert into APIENSEIGNANT(matricule,nom,prenom,tel,chargesem,salairemen,dateengagement) values(?,?,?,?,?,?,?)";
+        String query1 = "insert into APIENSEIGNANT(matricule,nom,prenom,tel,chargesem,salairemensuel,dateengagement) values(?,?,?,?,?,?,?)";
         String query2 = "select id_e from APIENSEIGNANT where matricule=?";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
              PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
@@ -77,7 +77,7 @@ public class EnseignantModelDB extends DAOEnseignant{
     }
 
     public Enseignant updateEnseignant(Enseignant enseignant) {
-        String query = "update APIENSEIGNANT set matricule=?,nom=?,prenom=?,tel=?,chargesem=?,salairemen=?,dateengagement=? where idenseignant=?";
+        String query = "update APIENSEIGNANT set matricule=?,nom=?,prenom=?,tel=?,chargesem=?,salairemensuel=?,dateengagement=? where id_e=?";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1, enseignant.getMatricule());
             pstm.setString(2, enseignant.getNom());
@@ -109,7 +109,7 @@ public class EnseignantModelDB extends DAOEnseignant{
                 String prenom = rs.getString("prenom");
                 String tel = rs.getString("tel");
                 int chargeSem = rs.getInt("chargesem");
-                BigDecimal salaireMen = rs.getBigDecimal("salairemen");
+                BigDecimal salaireMen = rs.getBigDecimal("salairemensuel");
                 LocalDate dateEngagement = rs.getDate("dateengagement").toLocalDate();
 
                 return new Enseignant(id, matricule, nom, prenom, tel, chargeSem, salaireMen, dateEngagement);
@@ -136,7 +136,7 @@ public class EnseignantModelDB extends DAOEnseignant{
                 String prenom = rs.getString("prenom");
                 String tel = rs.getString("tel");
                 int chargeSem = rs.getInt("chargesem");
-                BigDecimal salaireMen = rs.getBigDecimal("salairemen");
+                BigDecimal salaireMen = rs.getBigDecimal("salairemensuel");
                 LocalDate dateEngagement = rs.getDate("dateengagement").toLocalDate();
 
                 Enseignant enseignant = new Enseignant(id, matricule, nom, prenom, tel, chargeSem, salaireMen, dateEngagement);

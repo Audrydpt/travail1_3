@@ -11,19 +11,28 @@ public abstract class ClasseAbstractView implements Observer{
     protected ClasseController classeController;
     protected CoursAbstractView cav;
     protected SalleAbstractView sav;
+    protected EnseignantAbstractView eav;
     protected List<Classe> lc;
 
     public void setController(ClasseController classeController){
         this.classeController = classeController;
     }
+
     public void setCoursView(CoursAbstractView cav){
         this.cav = cav;
+    }
+
+    public void setSalleView(SalleAbstractView sav){
+        this.sav = sav;
+    }
+
+    public void setEnseignantView(EnseignantAbstractView eav){
+        this.eav = eav;
     }
 
 
     public abstract void affMsg(String msg);
 
-    public abstract Classe selectionner();
 
     public abstract void menu();
 

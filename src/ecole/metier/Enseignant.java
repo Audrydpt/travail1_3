@@ -77,6 +77,16 @@ public class Enseignant {
         this.dateEngagement = dateEngagement;
     }
 
+    public Enseignant(String matricule, String nom, String prenom, String telephone, int chargeSem, BigDecimal salaireMensuel, LocalDate dateEngagement) {
+        this.matricule = matricule;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.tel = telephone;
+        this.chargeSem = chargeSem;
+        this.salaireMensuel = salaireMensuel;
+        this.dateEngagement = dateEngagement;
+    }
+
     /**
      * Obtient l'identifiant de l'enseignant
      *
@@ -238,5 +248,18 @@ public class Enseignant {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public String toString(){
+        return "Enseignant{" +
+                "id=" + id +
+                ", matricule='" + matricule + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", tel='" + tel + '\'' +
+                ", chargeSem=" + chargeSem +
+                ", salaireMensuel=" + salaireMensuel +
+                ", dateEngagement=" + dateEngagement +
+                '}';
     }
 }

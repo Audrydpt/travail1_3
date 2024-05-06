@@ -58,6 +58,13 @@ public class Classe {
         this.nbreEleve = nbreEleve;
     }
 
+    public Classe(String sigle, int annee, String specialite, int nbrEleves) {
+        this.sigle = sigle;
+        this.annee = annee;
+        this.specialite = specialite;
+        this.nbreEleve = nbrEleves;
+    }
+
     /**
      * Obtient Info de la classe
      *
@@ -325,5 +332,17 @@ public class Classe {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Classe{" +
+                "id=" + id +
+                ", sigle='" + sigle + '\'' +
+                ", annee=" + annee +
+                ", specialite='" + specialite + '\'' +
+                ", nbreEleve=" + nbreEleve +
+                '}';
+
     }
 }

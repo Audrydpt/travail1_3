@@ -53,7 +53,15 @@ public class Infos {
      * @param nbHeures   Nombre d'heures attribuées
      */
 
-    public Infos(int id, Enseignant enseignant, Salle salle, Cours cours, int nbHeures) {
+    public Infos(int id,Salle salle, Enseignant enseignant, Cours cours, int nbHeures) {
+        this.id = idcpt++;
+        this.enseignant = enseignant;
+        this.salle = salle;
+        this.cours = cours;
+        this.nbHeures = nbHeures;
+    }
+
+    public Infos(Salle salle,Enseignant enseignant,  Cours cours, int nbHeures) {
         this.id = idcpt++;
         this.enseignant = enseignant;
         this.salle = salle;

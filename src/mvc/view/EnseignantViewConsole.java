@@ -56,9 +56,10 @@ public class EnseignantViewConsole extends EnseignantAbstractView {
         int chargeSem = sc.nextInt();
         System.out.println("Salaire Mensuel : ");
         BigDecimal salaireMensuel = sc.nextBigDecimal();
+        sc.nextLine();
         System.out.println("Date Engagement : ");
         LocalDate dateEngagement = LocalDate.parse(sc.nextLine());
-        Enseignant en = enseignantController.addEnseignant(new Enseignant(0, matricule, nom, prenom, telephone, chargeSem, salaireMensuel, dateEngagement));
+        Enseignant en = enseignantController.addEnseignant(new Enseignant(matricule, nom, prenom, telephone, chargeSem, salaireMensuel, dateEngagement));
         if(en==null) affMsg("Ajout raté");
         else affMsg("Ajout effectué : "+en);
     }

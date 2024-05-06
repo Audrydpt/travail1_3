@@ -17,6 +17,7 @@ public abstract class DAOComfact extends Subject {
     public abstract ComFact readComfact(int idComfact);
 
     public abstract List<ComFact> getComfacts();
+
     public abstract boolean addProd(ComFact cf, Produit pr, int q);
 
     public abstract boolean updateProd(ComFact cf, Produit pr, int q);
