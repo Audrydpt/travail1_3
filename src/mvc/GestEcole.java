@@ -48,10 +48,6 @@ public class GestEcole {
         cv.setCoursView(cov);
 
 
-
-
-
-
         sm.addObserver(sv);
         com.addObserver(cov);
         cm.addObserver(cv);
