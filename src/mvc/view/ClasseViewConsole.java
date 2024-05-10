@@ -67,7 +67,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
                 case 6:
                     listerCours(cr);
                     break;
-                case 7  ->   classeController.listeEnseignantsEtHeures(cr);
+               /* case 7  ->   classeController.listeEnseignantsEtHeures(cr);*/
 
                 case 8:
                     return;
@@ -178,4 +178,12 @@ public void supprimerCours(Classe cr) {
         else  affMsg("mise à jour infructueuse");
     }
 
+    @Override
+    public Classe selectionner() {
+        update(classeController.getAll());
+        int nl = choixListe(lc);
+        Classe classe = lc.get(nl - 1);
+        return classe;
+
+    }
 }

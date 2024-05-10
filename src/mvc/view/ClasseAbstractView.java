@@ -1,5 +1,6 @@
 package mvc.view;
 
+import ecole.metier.Cours;
 import mvc.controller.ClasseController;
 import mvc.observer.Observer;
 import ecole.metier.Classe;
@@ -29,6 +30,8 @@ public abstract class ClasseAbstractView implements Observer{
     public void setEnseignantView(EnseignantAbstractView eav){
         this.eav = eav;
     }
+
+    public abstract Classe selectionner();
 
 
     public abstract void affMsg(String msg);

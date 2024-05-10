@@ -18,7 +18,7 @@ public abstract class ComfactAbstractView implements Observer {
         this.comfactController = comfactController;
     }
 
-    ;
+
 
     public void setClientView(ClientAbstractView clv) {
         this.clv = clv;
