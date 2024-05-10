@@ -9,48 +9,53 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GestEcole {
-    private DAOSalle salleModel;
-    private DAOCours coursModel;
-    private DAOClasse classeModel;
-    private DAOEnseignant enseignantModel;
+    private DAOSalle sm;
+    private DAOCours com;
+    private DAOClasse cm;
+    private DAOEnseignant em;
 
 
-    private CoursController coursController;
-    private SalleController salleController;
-    private ClasseController classeController;
-    private EnseignantController enseignantController;
+    private CoursController coc;
+    private SalleController sc;
+    private ClasseController cc;
+    private EnseignantController ec;
 
 
-    private CoursAbstractView coursView;
-    private SalleAbstractView salleView;
-    private ClasseAbstractView classeView;
-    private EnseignantAbstractView enseignantView;
+    private CoursAbstractView cov;
+    private SalleAbstractView sv;
+    private ClasseAbstractView cv;
+    private EnseignantAbstractView ev;
 
 
     public void gestion() {
-        salleModel = new SalleModelDB();
-        salleView = new SalleViewConsole();
-        salleController = new SalleController(salleModel, salleView);
+        sm = new SalleModelDB();
+        sv = new SalleViewConsole();
+        sc = new SalleController(sm, sv);
 
 
-        coursModel = new CoursModelDB(salleController);
-        coursView = new CoursViewConsole(salleController);
-        coursController = new CoursController(coursModel, coursView);
+        com = new CoursModelDB(sc);
+        cov = new CoursViewConsole(sc);
+        coc = new CoursController(com, cov);
 
-        classeModel = new ClasseModelDB();
-        classeView = new ClasseViewConsole();
-        classeController = new ClasseController(classeModel, classeView);
+        cm = new ClasseModelDB();
+        cv = new ClasseViewConsole();
+        cc = new ClasseController(cm, cv);
 
-        enseignantModel = new EnseignantModelDB();
-        enseignantView = new EnseignantViewConsole();
-        enseignantController = new EnseignantController(enseignantModel, enseignantView);
+        em = new EnseignantModelDB();
+        ev = new EnseignantViewConsole();
+        ec = new EnseignantController(em, ev);
+
+        cv.setCoursView(cov);
 
 
 
-        salleModel.addObserver(salleView);
-        coursModel.addObserver(coursView);
-        classeModel.addObserver(classeView);
-        enseignantModel.addObserver(enseignantView);
+
+
+
+        sm.addObserver(sv);
+        com.addObserver(cov);
+        cm.addObserver(cv);
+        em.addObserver(ev);
 
 
         List<String> loptions = Arrays.asList("salles", "cours", "classes", "enseignants", "fin");
@@ -58,16 +63,16 @@ public class GestEcole {
             int ch = Utilitaire.choixListe(loptions);
             switch (ch) {
                 case 1:
-                    salleView.menu();
+                    sv.menu();
                     break;
                 case 2:
-                    coursView.menu();
+                    cov.menu();
                     break;
                 case 3:
-                    classeView.menu();
+                    cv.menu();
                     break;
                 case 4:
-                    enseignantView.menu();
+                    ev.menu();
                     break;
                 case 5:
                     System.exit(0);

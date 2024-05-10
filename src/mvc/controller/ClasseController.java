@@ -3,6 +3,7 @@ package mvc.controller;
 import ecole.metier.Classe;
 import ecole.metier.Infos;
 import ecole.metier.Cours;
+import ecole.metier.Salle;
 import mvc.model.DAOClasse;
 import mvc.view.ClasseAbstractView;
 
@@ -60,6 +61,26 @@ public class ClasseController {
 
     public List<Infos> getCours(Classe classe) {
         return model.getCours(classe);
+    }
+
+    public List<Infos> listeEnseignantsEtHeures(Classe classe) {
+        return model.listeEnseignantsEtHeures(classe);
+    }
+
+    public List<Infos> listeSallesEtHeures(Classe classe) {
+        return model.listeSallesEtHeures(classe);
+    }
+
+    public List<Infos> listeCoursEtHeures(Classe classe) {
+        return model.listeCoursEtHeures(classe);
+    }
+
+    public int nbrHeuresTot(Classe classe) {
+        return model.nbrHeuresTot(classe);
+    }
+
+    public boolean salleCapaciteOK(Classe classe, Salle salle){
+        return model.salleCapaciteOK(classe,salle);
     }
 
 

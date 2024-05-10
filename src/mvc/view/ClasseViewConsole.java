@@ -69,9 +69,27 @@ public class ClasseViewConsole extends ClasseAbstractView {
                     break;
                /* case 7  ->   classeController.listeEnseignantsEtHeures(cr);*/
 
-                case 8:
+                case 7:
                     return;
             }
+        } while (true);
+    }
+
+    private void special1(Classe cr) {
+        do {
+            int ch = choixListe(Arrays.asList("liste enseignants et heures", "liste cours et heures", "liste salles et heures", "fin"));
+            if(ch==4) return;
+            List l =   switch (ch) {
+                case 1 ->  classeController.listeEnseignantsEtHeures(cr);
+
+                case 2 -> classeController.listeCoursEtHeures(cr);
+
+                case 3 -> classeController.listeSallesEtHeures(cr);
+
+                default -> null;
+            };
+            if(l==null || l.isEmpty()) affMsg("aucun élément trouvée");
+            else affList(l);
         } while (true);
     }
 
@@ -80,6 +98,7 @@ public void ajouter(){
     String sigle = sc.nextLine();
     System.out.println("Année : ");
     int annee = sc.nextInt();
+    sc.nextLine();
     System.out.println("Specialité : ");
     String specialite = sc.nextLine();
     System.out.println("Nbr Eleves : ");
@@ -108,6 +127,17 @@ public void ajouter(){
         }
 
 
+    }
+
+    public void recherche2(){
+        System.out.println("idClasse : ");
+        int idClasse = sc.nextInt();
+        Classe c =classeController.search(idClasse);
+        if(c==null) affMsg("recherche infructueuse");
+        else {
+            affMsg(c.toString());
+            special1(c);
+        }
     }
 
     public void modifier() {

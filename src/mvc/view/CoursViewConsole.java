@@ -93,7 +93,9 @@ public class CoursViewConsole extends CoursAbstractView {
 
 
     public Cours selectionner() {
+        update(coursController.getAll());
         int nl = choixElt(lco);
-        return lco.get(nl - 1);
+        Cours cours = lco.get(nl - 1);
+        return cours;
     }
 }

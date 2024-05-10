@@ -10,10 +10,15 @@ public abstract class CoursAbstractView implements Observer {
 
     protected CoursController coursController;
     protected SalleAbstractView sav;
+    protected CoursAbstractView cav;
     protected List<Cours> lco;
 
     public void setController(CoursController coursController){
         this.coursController = coursController;
+    }
+
+    public void setCoursView(CoursAbstractView cav){
+        this.cav = cav;
     }
 
     public void setSalleView(SalleAbstractView sav){
