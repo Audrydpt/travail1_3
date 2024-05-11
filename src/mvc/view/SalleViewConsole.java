@@ -1,5 +1,6 @@
 package mvc.view;
 
+import ecole.metier.Classe;
 import ecole.metier.Salle;
 
 import java.util.List;
@@ -45,6 +46,19 @@ public class SalleViewConsole extends SalleAbstractView {
         } while (true);
     }
 
+    private void special1(Salle s) {
+        do {
+            int ch = choixListe(Arrays.asList("Liste de cours pour cette salle pdft", "fin"));
+            if(ch==2) return;
+            List l =   switch (ch) {
+                case 1 ->  salleController.coursSalleDefaut(s);
+
+                default -> null;
+            };
+            if(l==null || l.isEmpty()) affMsg("aucun élément trouvée");
+            else affList(l);
+        } while (true);
+    }
     public void ajouter() {
         System.out.println("Sigle :");
         String sigle = scanner.nextLine();
@@ -66,6 +80,12 @@ public class SalleViewConsole extends SalleAbstractView {
         System.out.println("id : ");
         int id = scanner.nextInt();
         Salle salle = salleController.search(id);
+        if (salle == null) affMsg("Recherche infructueuse");
+        else{
+            affMsg(salle.toString());
+            special1(salle);
+
+        }
     }
 
     public void modifier() {

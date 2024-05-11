@@ -58,7 +58,7 @@ public class CoursViewConsole extends CoursAbstractView {
         String intitule = scanner.nextLine();
         System.out.println("ID de la salle par défaut : ");
         int salleId = scanner.nextInt();
-        Salle salleParDefault = salleController.getSalleById(salleId);
+        Salle salleParDefault = salleController.search(salleId);
         Cours cours = coursController.addCours(new Cours(code, intitule, salleParDefault));
         if (cours == null) affMsg("Ajout infructueux");
         else affMsg("Ajout effectué : " + cours);
@@ -84,7 +84,7 @@ public class CoursViewConsole extends CoursAbstractView {
         String intitule = modifyIfNotBlank("intitule", cours.getIntitule());
         System.out.println("Nouvel ID de la salle par défaut : ");
         int newSalleParDefaultId = scanner.nextInt();
-        Salle newSalle = salleController.getSalleById(newSalleParDefaultId);
+        Salle newSalle = salleController.search(newSalleParDefaultId);
         Cours newCours = new Cours(cours.getId(), code, intitule, newSalle);
         Cours coursMaj = coursController.update(newCours);
         if (coursMaj == null) affMsg("Mise à jour infructueuse");

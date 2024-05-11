@@ -28,7 +28,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     public void menu() {
         update(classeController.getAll());
         do{
-            int ch = choixListe(Arrays.asList("ajout", "suppression", "rechercher", "modifier", "fin"));
+            int ch = choixListe(Arrays.asList("ajout", "suppression", "rechercher", "modifier","rechercher2", "fin"));
 
             switch(ch){
                 case 1: ajouter();
@@ -39,7 +39,9 @@ public class ClasseViewConsole extends ClasseAbstractView {
                     break;
                 case 4 : modifier();
                     break;
-                case 5 : return;
+                case 5 : recherche2();
+                    break;
+                case 6 : return;
             }
         }while(true);
     }

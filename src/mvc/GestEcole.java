@@ -46,6 +46,9 @@ public class GestEcole {
         ec = new EnseignantController(em, ev);
 
         cv.setCoursView(cov);
+        cv.setSalleView(sv);
+        cv.setEnseignantView(ev);
+
 
 
         sm.addObserver(sv);

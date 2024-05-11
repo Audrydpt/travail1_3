@@ -141,11 +141,11 @@ public class ClasseModelDB extends DAOClasse {
 
     @Override
     public boolean addCours(Classe classe, Cours cours, int h) {
-        String query = "insert into APIInfos(nbheures,id_s,id_e,id_co,id_c,) values(?,?,?)";
+        String query = "insert into APIInfos(nbheures,id_s,id_e,id_co,id_c) values(?,?,?,?,?)";
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1, h);
-            pstm.setInt(2, 0);
-            pstm.setInt(3, 0);
+            pstm.setString(2, null);
+            pstm.setString(3, null);
             pstm.setInt(4, cours.getId());
             pstm.setInt(5, classe.getId());
             int n = pstm.executeUpdate();
@@ -153,7 +153,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return false;
         }
     }
@@ -170,7 +170,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return false;
         }
     }
@@ -187,7 +187,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return false;
         }
     }
@@ -204,7 +204,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return false;
         }
     }
@@ -220,7 +220,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return false;
         }
     }

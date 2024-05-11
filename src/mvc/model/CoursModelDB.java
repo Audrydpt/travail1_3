@@ -50,7 +50,7 @@ public class CoursModelDB extends DAOCours {
             } else return null;
 
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return null;
         }
     }
@@ -100,7 +100,7 @@ public class CoursModelDB extends DAOCours {
                     String code = rs.getString("code");
                     String intitule = rs.getString("intitule");
                     int idsalle = rs.getInt("id_s");
-                    Salle salleParDefault = salleController.getSalleById(idsalle);
+                    Salle salleParDefault = salleController.search(idsalle);
                     Cours c = new Cours(id, code, intitule, salleParDefault);
                     return c;
                 }
@@ -127,7 +127,7 @@ public class CoursModelDB extends DAOCours {
                 String code = rs.getString("code");
                 String intitule = rs.getString("intitule");
                 int idsalle = rs.getInt("id_s");
-                Salle salleParDefault = salleController.getSalleById(idsalle);
+                Salle salleParDefault = salleController.search(idsalle);
                 Cours c = new Cours(id, code, intitule, salleParDefault);
                 lco.add(c);
             }
