@@ -2,7 +2,6 @@ package mvc.view;
 
 
 import ecole.metier.*;
-import magasin.metier.Client;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -174,7 +173,7 @@ public void ajouter(){
         else affMsg("erreur lors de l'ajout du cours");
     }
 
-public void supprimerCours(Classe cr) {
+    public void supprimerCours(Classe cr) {
         System.out.println("suppression d'un cours");
         Cours co = cav.selectionner();
         boolean ok = classeController.supCours(cr, co);

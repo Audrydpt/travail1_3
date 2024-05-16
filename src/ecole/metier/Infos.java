@@ -188,9 +188,10 @@ public class Infos {
     @Override
     public String toString() {
         String enseignantNom = (enseignant != null) ? enseignant.getNom() : "Aucun enseignant";
+        String enseignantPrenom = (enseignant != null) ? enseignant.getPrenom() : "Aucun enseignant";
 
-        return "\t Infos : " + id + " - " + enseignantNom + " - " + ((salle != null) ? salle.getSigle() : "Aucune salle")
-                + " - " + ((cours != null) ? cours.getIntitule() : "Aucun cours") + " - " + nbHeures + " heures \n";
+        return "\t Infos : "+ enseignantNom + " " + enseignantPrenom + " - " + ((salle != null) ? salle.getSigle() : "Aucune salle")
+                + " - " + ((cours != null) ? cours.getIntitule() : "Aucun cours");
         //affichage généré par chatgpt
     }
 

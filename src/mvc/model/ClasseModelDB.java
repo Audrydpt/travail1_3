@@ -373,6 +373,12 @@ LEFT JOIN
                 int id_s = rs.getInt(15);
                 String sigle = rs.getString(16);
                 int capacite = rs.getInt(17);
+                Salle s = new Salle(id_s, sigle, capacite);
+                Enseignant e = new Enseignant(id_e, matricule, nom, prenom, tel, chargeSem, salaireMensuel, dateEngagement);
+                Cours co = new Cours(id_co, code, intitule, s);
+                Infos i = new Infos(nbh, s, e, co, id_c);
+                ll.add(i);
+
 
             }
         } catch (SQLException e) {
