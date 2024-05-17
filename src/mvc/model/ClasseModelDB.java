@@ -224,6 +224,31 @@ public class ClasseModelDB extends DAOClasse {
             return false;
         }
     }
+    @Override
+    public int nbrHeuresTot(Classe classe) {
+        String query = "select nbheures from APIInfos where id_c=?";
+        int total = 0;
+        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1, classe.getId());
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                total += rs.getInt("nbheures");
+            }
+            return total;
+        } catch (SQLException e) {
+            //System.err.println("erreur sql :"+e);
+            return 0;
+        }
+
+    }
+
+    @Override
+    public boolean salleCapaciteOK(Classe classe, Salle salle) {
+        int nbreleve = classe.getNbreEleve();
+        int capacite = salle.getCapacite();
+        if (nbreleve <= capacite) return true;
+        else return false;
+    }
 
     /*
 
@@ -295,7 +320,7 @@ LEFT JOIN
             }
             return ll;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return null;
         }
     }
@@ -322,31 +347,7 @@ LEFT JOIN
     }
 
 
-    @Override
-    public int nbrHeuresTot(Classe classe) {
-        String query = "select nbheures from APIInfos where id_c=?";
-        int total = 0;
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1, classe.getId());
-            ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {
-                total += rs.getInt("nbheures");
-            }
-            return total;
-        } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
-            return 0;
-        }
 
-    }
-
-    @Override
-    public boolean salleCapaciteOK(Classe classe, Salle salle) {
-        int nbreleve = classe.getNbreEleve();
-        int capacite = salle.getCapacite();
-        if (nbreleve <= capacite) return true;
-        else return false;
-    }
 
     private List<Infos> recherche(Classe classe, String query) {
         List<Infos> ll = new ArrayList<>();
@@ -356,33 +357,36 @@ LEFT JOIN
             boolean trouve = false;
             while (rs.next()) {
                 trouve = true;
-                int id_i = rs.getInt(1);
-                int nbh = rs.getInt(2);
-                int id_c = rs.getInt(3);
-                int id_co = rs.getInt(4);
-                String code = rs.getString(5);
-                String intitule = rs.getString(6);
-                int id_e = rs.getInt(7);
-                String matricule = rs.getString(8);
-                String nom = rs.getString(9);
-                String prenom = rs.getString(10);
-                String tel = rs.getString(11);
-                int chargeSem = rs.getInt(12);
-                BigDecimal salaireMensuel = rs.getBigDecimal(13);
-                LocalDate dateEngagement = rs.getDate(14).toLocalDate();
-                int id_s = rs.getInt(15);
-                String sigle = rs.getString(16);
-                int capacite = rs.getInt(17);
+                int id_s = rs.getInt("id_s");
+                String sigle = rs.getString("sigle");
+                int capacite = rs.getInt("capacite");
+
+                int id_e = rs.getInt("id_e");
+                String matricule = rs.getString("matricule");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String tel = rs.getString("tel");
+                int chargeSem = rs.getInt("chargeSem");
+                BigDecimal salaireMensuel = rs.getBigDecimal("salaireMensuel");
+                LocalDate dateEngagement = rs.getDate("dateEngagement").toLocalDate();
+
+                int id_co = rs.getInt("id_co");
+                String code = rs.getString("code");
+                String intitule = rs.getString("intitule");
+
+                int id_c = rs.getInt("id_c");
+                int nbheures = rs.getInt("nbheures");
+
                 Salle s = new Salle(id_s, sigle, capacite);
                 Enseignant e = new Enseignant(id_e, matricule, nom, prenom, tel, chargeSem, salaireMensuel, dateEngagement);
                 Cours co = new Cours(id_co, code, intitule, s);
-                Infos i = new Infos(nbh, s, e, co, id_c);
+                Infos i = new Infos(nbheures, s, e, co, id_c);
                 ll.add(i);
 
 
             }
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :"+e);
             return null;
         }
         return ll;
