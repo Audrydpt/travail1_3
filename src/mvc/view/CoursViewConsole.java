@@ -53,7 +53,8 @@ public class CoursViewConsole extends CoursAbstractView {
 
     public void ajouter() {
         System.out.println("Code : ");
-        String code = scanner.nextLine();
+        String code = scanner.next();
+        scanner.nextLine();
         System.out.println("Intitule : ");
         String intitule = scanner.nextLine();
         System.out.println("ID de la salle par défaut : ");

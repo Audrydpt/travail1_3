@@ -62,6 +62,7 @@ public class SalleViewConsole extends SalleAbstractView {
     public void ajouter() {
         System.out.println("Sigle :");
         String sigle = scanner.nextLine();
+        scanner.nextLine();
         System.out.println("Capacité :");
         int capacite = scanner.nextInt();
         Salle salle = salleController.addSalle(new Salle(sigle, capacite));

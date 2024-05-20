@@ -51,7 +51,16 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     private void special(Classe cr) {
         do {
-            int ch = choixListe(Arrays.asList("ajouter cours", "modifier cours et heures", "modifier cours et enseignant", "modifier coures et salle", "supprimer cours", "lister cours", "menu principal"));
+            int ch = choixListe(Arrays.asList(
+                    "ajouter cours",
+                    "modifier cours et heures",
+                    "modifier cours et enseignant",
+                    "modifier cours et salle",
+                    "supprimer cours",
+                    "lister cours",
+                    "nbrHeuresTot",
+                    "verifier capacite salle",
+                    "menu principal"));
 
             switch (ch) {
                 case 1:
@@ -72,12 +81,38 @@ public class ClasseViewConsole extends ClasseAbstractView {
                 case 6:
                     listerCours(cr);
                     break;
-
                 case 7:
+                    testerNbrHeuresTot(cr);
+                    break;
+                case 8:
+                    verifierCapaciteSalle(cr);
+                    break;
+                case 9:
                     return;
             }
         } while (true);
     }
+
+
+    private void verifierCapaciteSalle(Classe cr) {
+        System.out.println("salle pour verif :");
+        Salle salle = sav.selectionner();
+
+        boolean capaciteOK = classeController.salleCapaciteOK(cr, salle);
+        if (capaciteOK) {
+            affMsg("capacite OK");
+        } else {
+            affMsg("capacite insuffisante");
+        }
+    }
+
+
+    private void testerNbrHeuresTot(Classe cr) {
+        int totalHeures = classeController.nbrHeuresTot(cr);
+        affMsg("Nombre total d'heures  : " + totalHeures);
+    }
+
+
     /*
     private void special1(Classe cr) {
         do {
@@ -92,7 +127,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
                 default -> null;
             };
-            if(l==null || l.isEmpty()) affMsg("test");
+            if(l==null || l.isEmpty()) affMsg("liste vide");
             else affList(l);
         } while (true);
     }
@@ -129,7 +164,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
         Classe cr = lc.get(nl - 1);
         boolean ok = classeController.removeClasse(cr);
         if (ok) affMsg("Suppression effectuée");
-        else affMsg("Suppression ratée");
+        else affMsg("Suppression ratée car classe non vide");
     }
 
     public void rechercher() {

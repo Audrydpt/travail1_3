@@ -21,61 +21,54 @@ public class SalleModelDB extends DAOSalle {
 
     @Override
     public Salle addSalle(Salle salle) {
-        String query = "insert into APISALLE(sigle, capacite) values(?,?)";
-        String query2 = "select id_s from APISALLE where sigle=?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query);
-             PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
-        ) {
-            pstm.setString(1, salle.getSigle());
-            pstm.setInt(2, salle.getCapacite());
-            int n = pstm.executeUpdate();
-            if (n == 1) {
-                pstm2.setString(1, salle.getSigle());
-                ResultSet rs = pstm2.executeQuery();
-                if (rs.next()) {
-                    int id = rs.getInt(1);
-                    salle.setId(id);
-                    notifyObservers();
-                    return salle;
-                } else return null;
-            } else return null;
+        String addProcedure = "{ call APIADD_SALLE(?,?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(addProcedure)) {
+            cstm.setString(1, salle.getSigle());
+            cstm.setInt(2, salle.getCapacite());
+            cstm.executeUpdate();
+            notifyObservers();
+            return salle;
         } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
+            System.err.println("Erreur SQL :" + e);
             return null;
         }
     }
 
+
     @Override
     public boolean removeSalle(Salle salle) {
-        String query = "delete from APISALLE where id_s=?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query);) {
-            pstm.setInt(1, salle.getId());
-            int n = pstm.executeUpdate();
+        String removeProcedure = "{ call APIREMOVE_SALLE(?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(removeProcedure)) {
+            cstm.setInt(1, salle.getId());
+            int n = cstm.executeUpdate();
             if (n == 1) {
                 notifyObservers();
                 return true;
-            } else return false;
+            } else {
+                return false;
+            }
         } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
+            System.err.println("Erreur SQL :" + e);
             return false;
         }
     }
 
+
     @Override
     public Salle updateSalle(Salle salle) {
-        String query = "update APISALLE set sigle=?, capacite=? where id_s=?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query);) {
-            pstm.setString(1, salle.getSigle());
-            pstm.setInt(2, salle.getCapacite());
-            pstm.setInt(3, salle.getId());
-            int n = pstm.executeUpdate();
-            if (n == 0) return null;
+        String updateProcedure = "{ call APIUPDATE_SALLE(?,?,?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(updateProcedure)) {
+            cstm.setInt(1, salle.getId());
+            cstm.setString(2, salle.getSigle());
+            cstm.setInt(3, salle.getCapacite());
+            cstm.executeUpdate();
             return salle;
         } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
+            System.err.println("Erreur SQL :" + e);
             return null;
         }
     }
+
 
     @Override
     public Salle readSalle(int id) {

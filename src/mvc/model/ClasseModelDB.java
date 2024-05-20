@@ -24,74 +24,58 @@ public class ClasseModelDB extends DAOClasse {
 
     @Override
     public Classe addClasse(Classe classe) {
-        String query1 = "insert into APICLASSE(sigle,annee,specialite,nbreleve) values(?,?,?,?)";
-        String query2 = "select id_c from APICLASSE where sigle=?";
-        try (java.sql.PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
-             java.sql.PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
-        ) {
-            pstm1.setString(1, classe.getSigle());
-            pstm1.setInt(2, classe.getAnnee());
-            pstm1.setString(3, classe.getSpecialite());
-            pstm1.setInt(4, classe.getNbreEleve());
-            int n = pstm1.executeUpdate();
-            if (n == 1) {
-                pstm2.setString(1, classe.getSigle());
-                ResultSet rs = pstm2.executeQuery();
-                if (rs.next()) {
-                    int id_c = rs.getInt(1);
-                    classe.setId(id_c);
-                    notifyObservers();
-                    return classe;
-                } else {
-
-                    System.err.println("record introuvable");
-                    return null;
-                }
-            } else return null;
-
+        String addProcedure = "{ call APIADD_CLASSE(?,?,?,?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(addProcedure)) {
+            cstm.setString(1, classe.getSigle());
+            cstm.setInt(2, classe.getAnnee());
+            cstm.setString(3, classe.getSpecialite());
+            cstm.setInt(4, classe.getNbreEleve());
+            cstm.executeUpdate();
+            notifyObservers();
+            return classe;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("Erreur SQL :" + e);
             return null;
         }
-
-
     }
+
 
     @Override
     public boolean removeClasse(Classe classe) {
-        String query = "delete from APICLASSE where id_c = ?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-
-            pstm.setInt(1, classe.getId());
-            int n = pstm.executeUpdate();
+        String removeProcedure = "{ call APIREMOVE_CLASSE(?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(removeProcedure)) {
+            cstm.setInt(1, classe.getId());
+            int n = cstm.executeUpdate();
+            if (n == 0) {
+                return false;
+            }
             notifyObservers();
-            if (n != 0) return true;
-            else return false;
-
+            return true;
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("Erreur SQL :" + e);
             return false;
         }
     }
 
+
     @Override
     public Classe updateClasse(Classe classe) {
-        String query = "update APICLASSE set sigle=?, annee=?, specialite=?, nbreleve=? where id_c=?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setString(1, classe.getSigle());
-            pstm.setInt(2, classe.getAnnee());
-            pstm.setString(3, classe.getSpecialite());
-            pstm.setInt(4, classe.getNbreEleve());
-            pstm.setInt(5, classe.getId());
-            int n = pstm.executeUpdate();
+        String updateProcedure = "{ call APIUPDATE_CLASSE(?,?,?,?,?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(updateProcedure)) {
+            cstm.setInt(1, classe.getId());
+            cstm.setString(2, classe.getSigle());
+            cstm.setInt(3, classe.getAnnee());
+            cstm.setString(4, classe.getSpecialite());
+            cstm.setInt(5, classe.getNbreEleve());
+            cstm.executeUpdate();
             notifyObservers();
-            if (n != 0) return readClasse(classe.getId());
-            else return null;
+            return readClasse(classe.getId());
         } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
+            System.err.println("Erreur SQL :" + e);
             return null;
         }
     }
+
 
     @Override
     public Classe readClasse(int id_c) {
@@ -226,29 +210,38 @@ public class ClasseModelDB extends DAOClasse {
     }
     @Override
     public int nbrHeuresTot(Classe classe) {
-        String query = "select nbheures from APIInfos where id_c=?";
-        int total = 0;
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1, classe.getId());
-            ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {
-                total += rs.getInt("nbheures");
-            }
-            return total;
+        String query = "{ ? = call APICalcul_heurestot(?) }";
+        try (CallableStatement cstmt = dbConnect.prepareCall(query)) {
+            cstmt.registerOutParameter(1, Types.INTEGER);
+            cstmt.setInt(2, classe.getId());
+
+            cstmt.execute();
+            return cstmt.getInt(1);
         } catch (SQLException e) {
-            //System.err.println("erreur sql :"+e);
+            System.err.println("Erreur SQL : " + e.getMessage());
             return 0;
         }
-
     }
+
+
 
     @Override
     public boolean salleCapaciteOK(Classe classe, Salle salle) {
-        int nbreleve = classe.getNbreEleve();
-        int capacite = salle.getCapacite();
-        if (nbreleve <= capacite) return true;
-        else return false;
+        String query = "{ ? = call APICapaciteSalleOK(?, ?) }";
+        try (CallableStatement cstmt = dbConnect.prepareCall(query)) {
+            cstmt.registerOutParameter(1, Types.INTEGER);
+            cstmt.setInt(2, classe.getId());
+            cstmt.setInt(3, salle.getId());
+
+            cstmt.execute();
+            int result = cstmt.getInt(1);
+            return result == 1; //true
+        } catch (SQLException e) {
+            System.err.println("Erreur SQL : " + e.getMessage());
+            return false;
+        }
     }
+
 
     /*
 

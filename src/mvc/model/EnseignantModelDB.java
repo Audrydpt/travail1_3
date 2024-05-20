@@ -27,76 +27,80 @@ public class EnseignantModelDB extends DAOEnseignant{
 
 
     public Enseignant addEnseignant(Enseignant enseignant) {
-        String query1 = "insert into APIENSEIGNANT(matricule,nom,prenom,tel,chargesem,salairemensuel,dateengagement) values(?,?,?,?,?,?,?)";
-        String query2 = "select id_e from APIENSEIGNANT where matricule=?";
-        try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
-             PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
-        ) {
-            pstm1.setString(1, enseignant.getMatricule());
-            pstm1.setString(2, enseignant.getNom());
-            pstm1.setString(3, enseignant.getPrenom());
-            pstm1.setString(4, enseignant.getTel());
-            pstm1.setInt(5, enseignant.getChargeSem());
-            pstm1.setBigDecimal(6, enseignant.getSalaireMensuel());
-            pstm1.setDate(7, Date.valueOf(enseignant.getDateEngagement()));
-            int n = pstm1.executeUpdate();
-            if (n == 1) {
-                pstm2.setString(1, enseignant.getMatricule());
-                ResultSet rs = pstm2.executeQuery();
-                if (rs.next()) {
-                    int id_e = rs.getInt(1);
-                    enseignant.setID(id_e);
-                    notifyObservers();
-                    return enseignant;
-                } else {
+        String insertProcedure = "{ call APIADD_ENSEIGNANT(?,?,?,?,?,?,?) }";
+        String selectQuery = "SELECT id_e FROM APIENSEIGNANT WHERE matricule = ?";
+        try (CallableStatement cstm = dbConnect.prepareCall(insertProcedure);
+             PreparedStatement pstm2 = dbConnect.prepareStatement(selectQuery)) {
 
-                    System.err.println("record introuvable");
-                    return null;
-                }
-            } else return null;
+            cstm.setString(1, enseignant.getMatricule());
+            cstm.setString(2, enseignant.getNom());
+            cstm.setString(3, enseignant.getPrenom());
+            cstm.setString(4, enseignant.getTel());
+            cstm.setInt(5, enseignant.getChargeSem());
+            cstm.setBigDecimal(6, enseignant.getSalaireMensuel());
+            cstm.setDate(7, Date.valueOf(enseignant.getDateEngagement()));
+            cstm.execute();
 
+            pstm2.setString(1, enseignant.getMatricule());
+            ResultSet rs = pstm2.executeQuery();
+            if (rs.next()) {
+                int id_e = rs.getInt(1);
+                enseignant.setID(id_e);
+                notifyObservers();
+                return enseignant;
+            } else {
+                System.err.println("Record introuvable");
+                return null;
+            }
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
+            System.err.println("Erreur SQL :" + e);
             return null;
         }
     }
 
+
     public boolean removeEnseignant(Enseignant enseignant) {
-        String query = "delete from APIENSEIGNANT where id_e = ?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1, enseignant.getId());
-            int n = pstm.executeUpdate();
+        String removeProcedure = "{ call APIREMOVE_ENSEIGNANT(?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(removeProcedure)) {
+            cstm.setInt(1, enseignant.getId());
+            int n = cstm.executeUpdate();
             if (n == 1) {
                 notifyObservers();
                 return true;
-            } else return false;
-        }catch (SQLException e){
-            System.err.println("erreur sql :"+e);
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur SQL :" + e);
             return false;
         }
     }
 
+
     public Enseignant updateEnseignant(Enseignant enseignant) {
-        String query = "update APIENSEIGNANT set matricule=?,nom=?,prenom=?,tel=?,chargesem=?,salairemensuel=?,dateengagement=? where id_e=?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setString(1, enseignant.getMatricule());
-            pstm.setString(2, enseignant.getNom());
-            pstm.setString(3, enseignant.getPrenom());
-            pstm.setString(4, enseignant.getTel());
-            pstm.setInt(5, enseignant.getChargeSem());
-            pstm.setBigDecimal(6, enseignant.getSalaireMensuel());
-            pstm.setDate(7, Date.valueOf(enseignant.getDateEngagement()));
-            pstm.setInt(8, enseignant.getId());
-            int n = pstm.executeUpdate();
-            if (n == 0) {
+        String updateProcedure = "{ call APIUPDATE_ENSEIGNANT(?,?,?,?,?,?,?,?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(updateProcedure)) {
+            cstm.setInt(1, enseignant.getId());
+            cstm.setString(2, enseignant.getMatricule());
+            cstm.setString(3, enseignant.getNom());
+            cstm.setString(4, enseignant.getPrenom());
+            cstm.setString(5, enseignant.getTel());
+            cstm.setInt(6, enseignant.getChargeSem());
+            cstm.setBigDecimal(7, enseignant.getSalaireMensuel());
+            cstm.setDate(8, Date.valueOf(enseignant.getDateEngagement()));
+
+            int n = cstm.executeUpdate();
+            if (n == 1) {
+                return enseignant;
+            } else {
                 return null;
             }
-            return enseignant;
         } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
+            System.err.println("Erreur SQL :" + e);
             return null;
         }
     }
+
 
     public Enseignant readEnseignant(int id) {
         String query = "select * from APIENSEIGNANT where id_e = ?";

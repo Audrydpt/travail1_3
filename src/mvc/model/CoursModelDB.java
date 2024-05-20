@@ -25,70 +25,56 @@ public class CoursModelDB extends DAOCours {
 
     @Override
     public Cours addCours(Cours cours) {
-        String query1 = "insert into APICOURS(CODE,INTITULE,ID_S) values(?,?,?)";
-        String query2 = "select ID_CO from APICOURS where CODE=?";
-        try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
-             PreparedStatement pstm2 = dbConnect.prepareStatement(query2);
-        ) {
-            pstm1.setString(1, cours.getCode());
-            pstm1.setString(2, cours.getIntitule());
-            pstm1.setInt(3, cours.getSalleParDefault().getId());
-            int n = pstm1.executeUpdate();
-            if (n == 1) {
-                pstm2.setString(1, cours.getCode());
-                ResultSet rs = pstm2.executeQuery();
-                if (rs.next()) {
-                    int idcours = rs.getInt(1);
-                    cours.setId(idcours);
-                    notifyObservers();
-                    return cours;
-                } else {
-
-                    System.err.println("record introuvable");
-                    return null;
-                }
-            } else return null;
-
+        String addProcedure = "{ call APIADD_COURS(?,?,?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(addProcedure)) {
+            cstm.setString(1, cours.getCode());
+            cstm.setString(2, cours.getIntitule());
+            cstm.setInt(3, cours.getSalleParDefault().getId());
+            cstm.executeUpdate();
+            notifyObservers();
+            return cours;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
+            System.err.println("Erreur SQL :" + e);
             return null;
         }
     }
 
+
     @Override
     public boolean removeCours(Cours cours) {
-        String query = "delete from APICOURS where id_co = ?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setInt(1, cours.getId());
-            int n = pstm.executeUpdate();
+        String removeProcedure = "{ call APIREMOVE_COURS(?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(removeProcedure)) {
+            cstm.setInt(1, cours.getId());
+            int n = cstm.executeUpdate();
             if (n == 0) {
                 return false;
             }
             notifyObservers();
             return true;
         } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
+            System.err.println("Erreur SQL :" + e);
             return false;
         }
     }
 
+
     @Override
     public Cours updateCours(Cours cours) {
-        String query = "update APICOURS set code=?,intitule=?,id_s=? where id_co=?";
-        try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setString(1, cours.getCode());
-            pstm.setString(2, cours.getIntitule());
-            pstm.setInt(3, cours.getSalleParDefault().getId());
-            pstm.setInt(4, cours.getId());
-            int n = pstm.executeUpdate();
+        String updateProcedure = "{ call APIUPDATE_COURS(?,?,?,?) }";
+        try (CallableStatement cstm = dbConnect.prepareCall(updateProcedure)) {
+            cstm.setInt(1, cours.getId());
+            cstm.setString(2, cours.getCode());
+            cstm.setString(3, cours.getIntitule());
+            cstm.setInt(4, cours.getSalleParDefault().getId());
+            cstm.executeUpdate();
             notifyObservers();
-            if (n != 0) return readCours(cours.getId());
-            else return null;
+            return readCours(cours.getId());
         } catch (SQLException e) {
-            System.err.println("erreur sql :" + e);
+            System.err.println("Erreur SQL :" + e);
             return null;
         }
     }
+
 
     @Override
     public Cours readCours(int id) {
