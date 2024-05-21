@@ -25,7 +25,7 @@ public class Test {
                     .build();
             System.out.println(classe1);
         } catch (Exception e) {
-            System.out.println("e :" +e.getMessage());
+            System.out.println("e :" + e.getMessage());
 
         }
     }

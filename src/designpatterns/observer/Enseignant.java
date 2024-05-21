@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Enseignant implements Observer{
+public class Enseignant implements Observer {
     private int id;
     private String nom;
     private String prenom;

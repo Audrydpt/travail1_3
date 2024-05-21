@@ -129,23 +129,20 @@ public class Classe {
         //recherhe sur internet pour touver moyen d'empecher "doublons" dans les listes, donc utilisation de Map au lieu de ArrayList
         //mais si pas autorisé ou problème que je ne connais pas, on peut utiliser ArrayList*/
 
-        //avec List
+    //avec List
+    public List<EnseignantEtHeures> listeEnseignantHeures() {
+        List<EnseignantEtHeures> enseignantHeuresList = new ArrayList<>();
 
-        public List<EnseignantEtHeures> listeEnseignantHeures() {
-            List<EnseignantEtHeures> enseignantHeuresList = new ArrayList<>();
-
-            for (Infos infos : infoList) {
-                Enseignant enseignant = infos.getEnseignant();
-                if (enseignant != null) {
-                    EnseignantEtHeures enseignantEtHeures = new EnseignantEtHeures(enseignant, infos.getNbHeures());
-                    enseignantHeuresList.add(enseignantEtHeures);
-                }
-
+        for (Infos infos : infoList) {
+            Enseignant enseignant = infos.getEnseignant();
+            if (enseignant != null) {
+                EnseignantEtHeures enseignantEtHeures = new EnseignantEtHeures(enseignant, infos.getNbHeures());
+                enseignantHeuresList.add(enseignantEtHeures);
             }
-            return enseignantHeuresList;
+
         }
-
-
+        return enseignantHeuresList;
+    }
 
 
     /**
@@ -172,7 +169,6 @@ public class Classe {
     }*/
 
     //avec List
-
     public List<SalleEtHeures> listeSallesEtHeures() {
         List<SalleEtHeures> salleHeuresList = new ArrayList<>();
 

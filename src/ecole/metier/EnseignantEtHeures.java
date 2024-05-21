@@ -3,8 +3,8 @@ package ecole.metier;
 /**
  * Représente l'association entre un enseignant et le nombre d'heures dans une classe
  *
- * @version 1.0
  * @author Audry Dupont
+ * @version 1.0
  * @see Enseignant
  */
 public class EnseignantEtHeures {
@@ -23,7 +23,7 @@ public class EnseignantEtHeures {
      * Constructeur de l'association entre un enseignant et le nombre d'heures
      *
      * @param enseignant L'enseignant
-     * @param heures Le nombre d'heures
+     * @param heures     Le nombre d'heures
      */
 
     public EnseignantEtHeures(Enseignant enseignant, int heures) {

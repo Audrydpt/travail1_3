@@ -49,16 +49,17 @@ public class SalleViewConsole extends SalleAbstractView {
     private void special1(Salle s) {
         do {
             int ch = choixListe(Arrays.asList("Liste de cours pour cette salle pdft", "fin"));
-            if(ch==2) return;
-            List l =   switch (ch) {
-                case 1 ->  salleController.coursSalleDefaut(s);
+            if (ch == 2) return;
+            List l = switch (ch) {
+                case 1 -> salleController.coursSalleDefaut(s);
 
                 default -> null;
             };
-            if(l==null || l.isEmpty()) affMsg("aucun élément trouvée");
+            if (l == null || l.isEmpty()) affMsg("aucun élément trouvée");
             else affList(l);
         } while (true);
     }
+
     public void ajouter() {
         System.out.println("Sigle :");
         String sigle = scanner.nextLine();
@@ -82,7 +83,7 @@ public class SalleViewConsole extends SalleAbstractView {
         int id = scanner.nextInt();
         Salle salle = salleController.search(id);
         if (salle == null) affMsg("Recherche infructueuse");
-        else{
+        else {
             affMsg(salle.toString());
             special1(salle);
 
@@ -99,10 +100,10 @@ public class SalleViewConsole extends SalleAbstractView {
         else affMsg("Mise à jour effectuée : " + salleMaj);
     }
 
-    public Salle selectionner(){
+    public Salle selectionner() {
         update(salleController.getAll());
         int nl = choixElt(lsa);
-        Salle sa = lsa.get(nl-1);
+        Salle sa = lsa.get(nl - 1);
         return sa;
 
     }

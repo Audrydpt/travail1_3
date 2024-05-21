@@ -10,7 +10,6 @@ import java.util.Objects;
  * @author Audry Dupont
  * @version 1.0
  * @see Infos
-
  */
 public class Enseignant {
     /**
@@ -56,14 +55,14 @@ public class Enseignant {
     /**
      * Constructeur de la classe Enseignant
      *
-     * @param id               Identifiant unique de l'enseignant
-     * @param matricule        Matricule de l'enseignant
-     * @param nom              Nom de l'enseignant
-     * @param prenom           Prénom de l'enseignant
-     * @param tel              Numéro de téléphone de l'enseignant
-     * @param chargeSem        Charge de travail par semaine de l'enseignant
-     * @param salaireMensuel   Salaire mensuel de l'enseignant
-     * @param dateEngagement   Date d'engagement de l'enseignant
+     * @param id             Identifiant unique de l'enseignant
+     * @param matricule      Matricule de l'enseignant
+     * @param nom            Nom de l'enseignant
+     * @param prenom         Prénom de l'enseignant
+     * @param tel            Numéro de téléphone de l'enseignant
+     * @param chargeSem      Charge de travail par semaine de l'enseignant
+     * @param salaireMensuel Salaire mensuel de l'enseignant
+     * @param dateEngagement Date d'engagement de l'enseignant
      */
 
     public Enseignant(int id, String matricule, String nom, String prenom, String tel, int chargeSem, BigDecimal salaireMensuel, LocalDate dateEngagement) {
@@ -96,7 +95,7 @@ public class Enseignant {
         return id;
     }
 
-    public void setID(int id){
+    public void setID(int id) {
         this.id = id;
     }
 
@@ -250,7 +249,7 @@ public class Enseignant {
         return Objects.hash(id);
     }
 
-    public String toString(){
+    public String toString() {
         return "Enseignant{" +
                 "id=" + id +
                 ", matricule='" + matricule + '\'' +

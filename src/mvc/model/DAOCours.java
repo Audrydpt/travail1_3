@@ -5,7 +5,7 @@ import mvc.observer.Subject;
 
 import java.util.List;
 
-public abstract class DAOCours extends Subject{
+public abstract class DAOCours extends Subject {
     public abstract Cours addCours(Cours cours);
 
     public abstract boolean removeCours(Cours cours);
@@ -15,7 +15,6 @@ public abstract class DAOCours extends Subject{
     public abstract Cours readCours(int idCours);
 
     public abstract List<Cours> getCours();
-
 
 
 }

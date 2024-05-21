@@ -105,7 +105,7 @@ public class Classe {
 
 
         public Classe build() throws Exception {
-            if(sigle == null || annee == 0) {
+            if (sigle == null || annee == 0) {
                 throw new Exception("info incomplètes");
             }
             return new Classe(this);

@@ -50,7 +50,6 @@ public class GestEcole {
         cv.setEnseignantView(ev);
 
 
-
         sm.addObserver(sv);
         com.addObserver(cov);
         cm.addObserver(cv);
@@ -78,6 +77,7 @@ public class GestEcole {
             }
         } while (true);
     }
+
     public static void main(String[] args) {
         GestEcole gestEcole = new GestEcole();
         gestEcole.gestion();

@@ -5,7 +5,7 @@ import mvc.observer.Subject;
 
 import java.util.List;
 
-public abstract class   DAOClasse extends Subject {
+public abstract class DAOClasse extends Subject {
     public abstract Classe addClasse(Classe classe);
 
     public abstract boolean removeClasse(Classe classe);
@@ -20,12 +20,12 @@ public abstract class   DAOClasse extends Subject {
 
     public abstract boolean modifCours(Classe classe, Cours cours, Salle salle);
 
-    public abstract boolean modifCours(Classe classe,Cours cours, Enseignant enseignant);
+    public abstract boolean modifCours(Classe classe, Cours cours, Enseignant enseignant);
 
-    public abstract boolean modifCours(Classe classe,Cours cours, int h);
+    public abstract boolean modifCours(Classe classe, Cours cours, int h);
 
 
-    public abstract boolean supCours(Classe classe,Cours cours);
+    public abstract boolean supCours(Classe classe, Cours cours);
 
     public abstract List<Infos> getCours(Classe classe);
 
@@ -38,7 +38,6 @@ public abstract class   DAOClasse extends Subject {
     public abstract int nbrHeuresTot(Classe classe);
 
     public abstract boolean salleCapaciteOK(Classe classe, Salle salle);
-
 
 
 }

@@ -18,7 +18,7 @@ public class SalleController {
         this.view.setController(this);
     }
 
-    public List<Salle> getAll(){
+    public List<Salle> getAll() {
         return model.getSalles();
     }
 

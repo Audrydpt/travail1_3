@@ -6,11 +6,11 @@ import ecole.metier.Enseignant;
 
 import java.util.List;
 
-public abstract class EnseignantAbstractView implements Observer{
+public abstract class EnseignantAbstractView implements Observer {
     protected EnseignantController enseignantController;
     protected List<Enseignant> le;
 
-    public void setController(EnseignantController enseignantController){
+    public void setController(EnseignantController enseignantController) {
         this.enseignantController = enseignantController;
     }
 

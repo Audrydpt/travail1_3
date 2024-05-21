@@ -51,16 +51,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     private void special(Classe cr) {
         do {
-            int ch = choixListe(Arrays.asList(
-                    "ajouter cours",
-                    "modifier cours et heures",
-                    "modifier cours et enseignant",
-                    "modifier cours et salle",
-                    "supprimer cours",
-                    "lister cours",
-                    "nbrHeuresTot",
-                    "verifier capacite salle",
-                    "menu principal"));
+            int ch = choixListe(Arrays.asList("ajouter cours", "modifier cours et heures", "modifier cours et salle", "modifier cours et enseignant", "supprimer cours", "lister cours", "nbrHeuresTot", "verifier capacite salle", "menu principal"));
 
             switch (ch) {
                 case 1:
@@ -70,10 +61,10 @@ public class ClasseViewConsole extends ClasseAbstractView {
                     modifierCoursH(cr);
                     break;
                 case 3:
-                    modifierCoursE(cr);
+                    modifierCoursS(cr);
                     break;
                 case 4:
-                    modifierCoursS(cr);
+                    modifierCoursE(cr);
                     break;
                 case 5:
                     supprimerCours(cr);
@@ -82,7 +73,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
                     listerCours(cr);
                     break;
                 case 7:
-                    testerNbrHeuresTot(cr);
+                    NbrHeuresTot(cr);
                     break;
                 case 8:
                     verifierCapaciteSalle(cr);
@@ -107,7 +98,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     }
 
 
-    private void testerNbrHeuresTot(Classe cr) {
+    private void NbrHeuresTot(Classe cr) {
         int totalHeures = classeController.nbrHeuresTot(cr);
         affMsg("Nombre total d'heures  : " + totalHeures);
     }
@@ -214,15 +205,42 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     public void supprimerCours(Classe cr) {
         System.out.println("suppression d'un cours");
-        Cours co = cav.selectionner();
+        Cours co = selectionnerCoursDansClasse(cr);
         boolean ok = classeController.supCours(cr, co);
         if (ok) affMsg("cours supprimé");
         else affMsg("cours non supprimé");
     }
 
+    private Cours selectionnerCoursDansClasse(Classe classe) {
+        List<Infos> coursDeClasse = classeController.getCours(classe);
+        if (coursDeClasse.isEmpty()) {
+            System.out.println("Aucun cours trouvé pour cette classe.");
+            return null;
+        }
+
+        Cours choixC = null;
+        while (choixC == null) {
+            System.out.println("Sélectionnez un cours dans la classe :");
+            for (int i = 0; i < coursDeClasse.size(); i++) {
+                Infos infos = coursDeClasse.get(i);
+                System.out.println((i + 1) + ". id : " + infos.getCours().getId() + " - " + infos.getCours().getCode() + " - " + infos.getCours().getIntitule());
+            }
+
+            System.out.println("Votre choix :");
+            int choix = sc.nextInt();
+            if (choix >= 1 && choix <= coursDeClasse.size()) {
+                choixC = coursDeClasse.get(choix - 1).getCours();
+            } else {
+                System.out.println("choix pas ok");
+            }
+        }
+
+        return choixC;
+    }
+
     public void modifierCoursH(Classe cr) {
         System.out.println("modification d'un cours");
-        Cours co = cav.selectionner();
+        Cours co = selectionnerCoursDansClasse(cr);
         System.out.print("nombre d'heures :");
         int h = sc.nextInt();
         boolean ok = classeController.modifCours(cr, co, h);
@@ -232,7 +250,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     public void modifierCoursE(Classe cr) {
         System.out.println("modification d'un cours");
-        Cours co = cav.selectionner();
+        Cours co = selectionnerCoursDansClasse(cr);
         Enseignant en = eav.selectionner();
         boolean ok = classeController.modifCours(cr, co, en);
         if (ok) affMsg("mise à jour effectuée");
@@ -241,7 +259,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     public void modifierCoursS(Classe cr) {
         System.out.println("modification d'un cours");
-        Cours co = cav.selectionner();
+        Cours co = selectionnerCoursDansClasse(cr);
         Salle sa = sav.selectionner();
         boolean ok = classeController.modifCours(cr, co, sa);
         if (ok) affMsg("mise à jour effectuée");

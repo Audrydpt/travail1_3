@@ -10,7 +10,7 @@ public abstract class SalleAbstractView implements Observer {
     protected SalleController salleController;
     protected List<Salle> lsa;
 
-    public void setController(SalleController salleController){
+    public void setController(SalleController salleController) {
         this.salleController = salleController;
     }
 

@@ -1,7 +1,6 @@
 package designpatterns.composite;
 
 
-
 public abstract class Elt {
     private int id;
 

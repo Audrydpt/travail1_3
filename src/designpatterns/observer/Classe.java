@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Classe extends Subject{
+public class Classe extends Subject {
     private int id;
     private int annee;
     private String specialite;

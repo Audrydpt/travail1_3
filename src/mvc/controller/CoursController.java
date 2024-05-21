@@ -16,7 +16,7 @@ public class CoursController {
         this.view.setController(this);
     }
 
-    public List<Cours> getAll(){
+    public List<Cours> getAll() {
         return model.getCours();
     }
 
@@ -35,9 +35,6 @@ public class CoursController {
     public Cours search(int idCours) {
         return model.readCours(idCours);
     }
-
-
-
 
 
 }

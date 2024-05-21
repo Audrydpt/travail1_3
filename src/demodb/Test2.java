@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class Test2 {
 
-    public void demo1(){
+    public void demo1() {
 
         Connection dbConnect = DBConnection.getConnection();
         if (dbConnect == null) {

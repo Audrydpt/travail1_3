@@ -3,8 +3,8 @@ package ecole.metier;
 /**
  * Représente l'association entre un cours et le nombre d'heures dans une classe
  *
- * @version 1.0
  * @author Audry Dupont
+ * @version 1.0
  * @see Cours
  */
 public class CoursEtHeures {
@@ -22,7 +22,7 @@ public class CoursEtHeures {
     /**
      * Constructeur de l'association entre un cours et le nombre d'heures
      *
-     * @param cours Le cours
+     * @param cours  Le cours
      * @param heures Le nombre d'heures
      */
 

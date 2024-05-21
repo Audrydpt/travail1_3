@@ -53,7 +53,7 @@ public class Infos {
      * @param nbHeures   Nombre d'heures attribuées
      */
 
-    public Infos(int id,Salle salle, Enseignant enseignant, Cours cours, int nbHeures) {
+    public Infos(int id, Salle salle, Enseignant enseignant, Cours cours, int nbHeures) {
         this.id = idcpt++;
         this.enseignant = enseignant;
         this.salle = salle;
@@ -61,7 +61,7 @@ public class Infos {
         this.nbHeures = nbHeures;
     }
 
-    public Infos(Salle salle,Enseignant enseignant,  Cours cours, int nbHeures) {
+    public Infos(Salle salle, Enseignant enseignant, Cours cours, int nbHeures) {
         this.id = idcpt++;
         this.enseignant = enseignant;
         this.salle = salle;
@@ -148,12 +148,12 @@ public class Infos {
 
     /**
      * Modifie le cours associé aux informations
+     *
      * @param cours
      */
     public void setCours(Cours cours) {
         this.cours = cours;
     }
-
 
 
     /**
@@ -190,27 +190,10 @@ public class Infos {
         String enseignantNom = (enseignant != null) ? enseignant.getNom() : "Aucun enseignant";
         String enseignantPrenom = (enseignant != null) ? enseignant.getPrenom() : "Aucun enseignant";
 
-        return "\t Infos : "+ enseignantNom + " " + enseignantPrenom + " - " + ((salle != null) ? salle.getSigle() : "Aucune salle")
+        return "\t Infos : " + enseignantNom + " " + enseignantPrenom + " - " + ((salle != null) ? salle.getSigle() : "Aucune salle")
                 + " - " + ((cours != null) ? cours.getIntitule() : "Aucun cours");
         //affichage généré par chatgpt
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

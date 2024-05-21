@@ -16,7 +16,7 @@ public class EnseignantController {
         this.view.setController(this);
     }
 
-    public List<Enseignant> getAll(){
+    public List<Enseignant> getAll() {
         return model.getEnseignants();
     }
 

@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-public class EnseignantModelDB extends DAOEnseignant{
+public class EnseignantModelDB extends DAOEnseignant {
     protected Connection dbConnect;
 
     public EnseignantModelDB() {
@@ -23,7 +22,6 @@ public class EnseignantModelDB extends DAOEnseignant{
         }
 
     }
-
 
 
     public Enseignant addEnseignant(Enseignant enseignant) {

@@ -79,8 +79,8 @@ public class ClasseController {
         return model.nbrHeuresTot(classe);
     }
 
-    public boolean salleCapaciteOK(Classe classe, Salle salle){
-        return model.salleCapaciteOK(classe,salle);
+    public boolean salleCapaciteOK(Classe classe, Salle salle) {
+        return model.salleCapaciteOK(classe, salle);
     }
 
 

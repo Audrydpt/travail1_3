@@ -137,7 +137,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :" + e);
             return false;
         }
     }
@@ -154,7 +154,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :" + e);
             return false;
         }
     }
@@ -171,7 +171,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :" + e);
             return false;
         }
     }
@@ -188,7 +188,7 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :" + e);
             return false;
         }
     }
@@ -204,10 +204,11 @@ public class ClasseModelDB extends DAOClasse {
             if (n != 0) return true;
             else return false;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :" + e);
             return false;
         }
     }
+
     @Override
     public int nbrHeuresTot(Classe classe) {
         String query = "{ ? = call APICalcul_heurestot(?) }";
@@ -222,7 +223,6 @@ public class ClasseModelDB extends DAOClasse {
             return 0;
         }
     }
-
 
 
     @Override
@@ -296,7 +296,11 @@ LEFT JOIN
                 String tel = rs.getString("tel");
                 int chargeSem = rs.getInt("chargeSem");
                 BigDecimal salaireMensuel = rs.getBigDecimal("salaireMensuel");
-                LocalDate dateEngagement = rs.getDate("dateEngagement").toLocalDate();
+                LocalDate dateEngagement = null;
+                Date date = rs.getDate("dateEngagement");
+                if (date != null) {
+                    dateEngagement = date.toLocalDate();
+                }
 
                 int id_co = rs.getInt("id_co");
                 String code = rs.getString("code");
@@ -313,7 +317,7 @@ LEFT JOIN
             }
             return ll;
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :" + e);
             return null;
         }
     }
@@ -338,8 +342,6 @@ LEFT JOIN
         return recherche(classe, query);
 
     }
-
-
 
 
     private List<Infos> recherche(Classe classe, String query) {
@@ -379,7 +381,7 @@ LEFT JOIN
 
             }
         } catch (SQLException e) {
-            System.err.println("erreur sql :"+e);
+            System.err.println("erreur sql :" + e);
             return null;
         }
         return ll;

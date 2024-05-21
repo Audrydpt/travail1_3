@@ -48,7 +48,6 @@ public class GestionClasse {
     }
 
 
-
     public void ajoutClasse() {
         try {
             String query = "INSERT INTO APICLASSE(SIGLE, ANNEE, SPECIALITE, NBRELEVE) VALUES (?, ?, ?, ?)";
@@ -78,7 +77,8 @@ public class GestionClasse {
             System.out.println("Classe ajoutée avec succès");
 
         } catch (SQLException e) {
-            System.out.println("Erreur : " +e.getMessage());        }
+            System.out.println("Erreur : " + e.getMessage());
+        }
     }
 
     public void rechercheClasse() {
@@ -111,9 +111,9 @@ public class GestionClasse {
             }
 
         } catch (SQLException e) {
-            System.out.println("Erreur : " +e.getMessage());        }
+            System.out.println("Erreur : " + e.getMessage());
+        }
     }
-
 
 
     public void modificationClasse() {
@@ -151,7 +151,7 @@ public class GestionClasse {
             System.out.println("Classe modifiée avec succès");
 
         } catch (SQLException e) {
-            System.out.println("Erreur : " +e.getMessage());
+            System.out.println("Erreur : " + e.getMessage());
         }
     }
 
@@ -172,7 +172,8 @@ public class GestionClasse {
             System.out.println("Classe supprimée avec succès");
 
         } catch (SQLException e) {
-            System.out.println("Erreur : " +e.getMessage());        }
+            System.out.println("Erreur : " + e.getMessage());
+        }
     }
 
     private void tous() {
@@ -195,11 +196,11 @@ public class GestionClasse {
                 System.out.println("Nombre d'eleves: " + nbreleve);
             }
         } catch (SQLException e) {
-            System.out.println("Erreur : " +e.getMessage());        }
+            System.out.println("Erreur : " + e.getMessage());
+        }
 
 
     }
-
 
 
     public static void main(String[] args) {

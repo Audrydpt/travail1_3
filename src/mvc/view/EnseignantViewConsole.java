@@ -26,24 +26,29 @@ public class EnseignantViewConsole extends EnseignantAbstractView {
 
     public void menu() {
         update(enseignantController.getAll());
-        do{
+        do {
             int ch = choixListe(Arrays.asList("ajout", "suppression", "rechercher", "modifier", "fin"));
 
-            switch(ch){
-                case 1: ajouter();
+            switch (ch) {
+                case 1:
+                    ajouter();
                     break;
-                case 2 : retirer();
+                case 2:
+                    retirer();
                     break;
-                case 3: rechercher();
+                case 3:
+                    rechercher();
                     break;
-                case 4 : modifier();
+                case 4:
+                    modifier();
                     break;
-                case 5 : return;
+                case 5:
+                    return;
             }
-        }while(true);
+        } while (true);
     }
 
-    public void ajouter(){
+    public void ajouter() {
         System.out.println("Matricule : ");
         String matricule = sc.nextLine();
         System.out.println("Nom : ");
@@ -60,19 +65,19 @@ public class EnseignantViewConsole extends EnseignantAbstractView {
         System.out.println("Date Engagement : ");
         LocalDate dateEngagement = LocalDate.parse(sc.nextLine());
         Enseignant en = enseignantController.addEnseignant(new Enseignant(matricule, nom, prenom, telephone, chargeSem, salaireMensuel, dateEngagement));
-        if(en==null) affMsg("Ajout raté");
-        else affMsg("Ajout effectué : "+en);
+        if (en == null) affMsg("Ajout raté");
+        else affMsg("Ajout effectué : " + en);
     }
 
-    public void retirer(){
-        int nl=choixElt(le);
-        Enseignant en = le.get(nl-1);
+    public void retirer() {
+        int nl = choixElt(le);
+        Enseignant en = le.get(nl - 1);
         boolean res = enseignantController.removeEnseignant(en);
-        if(res) affMsg("Suppression effectuée");
+        if (res) affMsg("Suppression effectuée");
         else affMsg("Suppression ratée");
     }
 
-    public void rechercher(){
+    public void rechercher() {
         System.out.println("Id : ");
         int id = sc.nextInt();
         enseignantController.search(id);
@@ -81,23 +86,23 @@ public class EnseignantViewConsole extends EnseignantAbstractView {
     public void modifier() {
         int nl = choixElt(le);
 
-        Enseignant en = le.get(nl-1);
+        Enseignant en = le.get(nl - 1);
         String matricule = modifyIfNotBlank("matricule", en.getMatricule());
         String nom = modifyIfNotBlank("nom", en.getNom());
         String prenom = modifyIfNotBlank("prenom", en.getPrenom());
         String telephone = modifyIfNotBlank("telephone", en.getTel());
-        int chargeSem = Integer.parseInt(modifyIfNotBlank("charge semaine", ""+en.getChargeSem()));
-        BigDecimal salaireMensuel = new BigDecimal(modifyIfNotBlank("salaire mensuel", ""+en.getSalaireMensuel()));
+        int chargeSem = Integer.parseInt(modifyIfNotBlank("charge semaine", "" + en.getChargeSem()));
+        BigDecimal salaireMensuel = new BigDecimal(modifyIfNotBlank("salaire mensuel", "" + en.getSalaireMensuel()));
         LocalDate dateEngagement = LocalDate.parse(modifyIfNotBlank("date engagement", en.getDateEngagement().toString()));
-        Enseignant enmaj =  enseignantController.update(new Enseignant(en.getId(), matricule, nom, prenom, telephone, chargeSem, salaireMensuel, dateEngagement));
-        if(enmaj==null) affMsg("mise à jour infructueuse");
-        else affMsg("mise à jour effectuée : "+enmaj);
+        Enseignant enmaj = enseignantController.update(new Enseignant(en.getId(), matricule, nom, prenom, telephone, chargeSem, salaireMensuel, dateEngagement));
+        if (enmaj == null) affMsg("mise à jour infructueuse");
+        else affMsg("mise à jour effectuée : " + enmaj);
     }
 
     public Enseignant selectionner() {
         update(enseignantController.getAll());
-        int nl =  choixListe(le);
-        Enseignant en = le.get(nl-1);
+        int nl = choixListe(le);
+        Enseignant en = le.get(nl - 1);
         return en;
     }
 }

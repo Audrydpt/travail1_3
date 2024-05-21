@@ -34,10 +34,10 @@ public class Cours {
     /**
      * Constructeur de la classe Cours
      *
-     * @param id               Identifiant unique du cours
-     * @param code             Code du cours
-     * @param intitule         Intitulé du cours
-     * @param salleParDefault  Salle par défaut du cours
+     * @param id              Identifiant unique du cours
+     * @param code            Code du cours
+     * @param intitule        Intitulé du cours
+     * @param salleParDefault Salle par défaut du cours
      */
 
     public Cours(int id, String code, String intitule, Salle salleParDefault) {

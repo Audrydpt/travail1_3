@@ -3,8 +3,8 @@ package ecole.metier;
 /**
  * Représente l'association entre une salle et le nombre d'heures dans une classe
  *
- * @version 1.0
  * @author Audry Dupont
+ * @version 1.0
  * @see Salle
  */
 public class SalleEtHeures {
@@ -22,7 +22,7 @@ public class SalleEtHeures {
     /**
      * Constructeur de l'association entre une salle et le nombre d'heures
      *
-     * @param salle La salle
+     * @param salle  La salle
      * @param heures Le nombre d'heures
      */
     public SalleEtHeures(Salle salle, int heures) {
