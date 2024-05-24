@@ -27,7 +27,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     public void menu() {
         update(classeController.getAll());
         do {
-            int ch = choixListe(Arrays.asList("ajout", "suppression", "rechercher", "modifier", "fin"));
+            int ch = choixListe(Arrays.asList("ajout", "suppression", "rechercher", "modifier","méthodes liste", "fin"));
 
             switch (ch) {
                 case 1:
@@ -43,6 +43,9 @@ public class ClasseViewConsole extends ClasseAbstractView {
                     modifier();
                     break;
                 case 5:
+                    rechercher2();
+                    break;
+                case 6:
                     return;
             }
         } while (true);
@@ -88,13 +91,16 @@ public class ClasseViewConsole extends ClasseAbstractView {
             int ch = choixListe(Arrays.asList("Liste des enseignants et heures", "Liste des salles et heures", "Liste des cours et heures", "fin"));
             if (ch == 4) return;
             List l = switch (ch) {
+
                 case 1 -> classeController.listeEnseignantsEtHeures(cr);
                 case 2 -> classeController.listeSallesEtHeures(cr);
                 case 3 -> classeController.listeCoursEtHeures(cr);
                 default -> null;
+
             };
-            if (l == null || l.isEmpty()) affMsg("aucun élément trouvée");
-            else affList(l);
+            if (l == null || l.isEmpty()){
+                affMsg("aucun élément trouvée");
+            } else affList(l);
         } while (true);
     }
 
@@ -152,6 +158,18 @@ public class ClasseViewConsole extends ClasseAbstractView {
             affMsg(c.toString());
             special(c);
             //special2(c);
+        }
+
+
+    }
+    public void rechercher2() {
+        System.out.println("idClasse : ");
+        int idClasse = sc.nextInt();
+        Classe c = classeController.search(idClasse);
+        if (c == null) affMsg("recherche infructueuse");
+        else {
+            affMsg(c.toString());
+            special2(c);
         }
 
 
