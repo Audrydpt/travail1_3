@@ -1,9 +1,6 @@
 package mvc.controller;
 
-import ecole.metier.Classe;
-import ecole.metier.Infos;
-import ecole.metier.Cours;
-import ecole.metier.Salle;
+import ecole.metier.*;
 import mvc.model.DAOClasse;
 import mvc.view.ClasseAbstractView;
 
@@ -63,15 +60,15 @@ public class ClasseController {
         return model.getCours(classe);
     }
 
-    public List<Infos> listeEnseignantsEtHeures(Classe classe) {
+    public List<EnseignantEtHeures> listeEnseignantsEtHeures(Classe classe) {
         return model.listeEnseignantsEtHeures(classe);
     }
 
-    public List<Infos> listeSallesEtHeures(Classe classe) {
+    public List<SalleEtHeures> listeSallesEtHeures(Classe classe) {
         return model.listeSallesEtHeures(classe);
     }
 
-    public List<Infos> listeCoursEtHeures(Classe classe) {
+    public List<CoursEtHeures> listeCoursEtHeures(Classe classe) {
         return model.listeCoursEtHeures(classe);
     }
 

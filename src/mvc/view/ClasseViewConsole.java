@@ -42,7 +42,6 @@ public class ClasseViewConsole extends ClasseAbstractView {
                 case 4:
                     modifier();
                     break;
-                /* case 5 : recherche2(); */
                 case 5:
                     return;
             }
@@ -84,6 +83,21 @@ public class ClasseViewConsole extends ClasseAbstractView {
         } while (true);
     }
 
+    private void special2(Classe cr) {
+        do {
+            int ch = choixListe(Arrays.asList("Liste des enseignants et heures", "Liste des salles et heures", "Liste des cours et heures", "fin"));
+            if (ch == 4) return;
+            List l = switch (ch) {
+                case 1 -> classeController.listeEnseignantsEtHeures(cr);
+                case 2 -> classeController.listeSallesEtHeures(cr);
+                case 3 -> classeController.listeCoursEtHeures(cr);
+                default -> null;
+            };
+            if (l == null || l.isEmpty()) affMsg("aucun élément trouvée");
+            else affList(l);
+        } while (true);
+    }
+
 
     private void verifierCapaciteSalle(Classe cr) {
         System.out.println("salle pour verif :");
@@ -104,36 +118,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     }
 
 
-    /*
-    private void special1(Classe cr) {
-        do {
-            int ch = choixListe(Arrays.asList("liste enseignants et heures", "liste cours et heures", "liste salles et heures", "fin"));
-            if(ch==4) return;
-            List l =   switch (ch) {
-                case 1 ->  classeController.listeEnseignantsEtHeures(cr);
 
-                case 2 -> classeController.listeCoursEtHeures(cr);
-
-                case 3 -> classeController.listeSallesEtHeures(cr);
-
-                default -> null;
-            };
-            if(l==null || l.isEmpty()) affMsg("liste vide");
-            else affList(l);
-        } while (true);
-    }
-    public void recherche2(){
-        System.out.println("idClasse : ");
-        int idClasse = sc.nextInt();
-        Classe c =classeController.search(idClasse);
-        if(c==null) affMsg("recherche infructueuse");
-        else {
-            affMsg(c.toString());
-            special1(c);
-        }
-    }
-
-     */
 
     public void ajouter() {
         System.out.println("Sigle : ");
@@ -166,6 +151,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
         else {
             affMsg(c.toString());
             special(c);
+            //special2(c);
         }
 
 
@@ -205,10 +191,49 @@ public class ClasseViewConsole extends ClasseAbstractView {
 
     public void supprimerCours(Classe cr) {
         System.out.println("suppression d'un cours");
-        Cours co = selectionnerCoursDansClasse(cr);
+        Cours co = selectionnerCoursDansClasse(cr); //ou cav.selectionner();
         boolean ok = classeController.supCours(cr, co);
         if (ok) affMsg("cours supprimé");
         else affMsg("cours non supprimé");
+    }
+
+
+
+    public void modifierCoursH(Classe cr) {
+        System.out.println("modification d'un cours");
+        Cours co = selectionnerCoursDansClasse(cr); //ou cav.selectionner();
+        System.out.print("nombre d'heures :");
+        int h = sc.nextInt();
+        boolean ok = classeController.modifCours(cr, co, h);
+        if (ok) affMsg("mise à jour effectuée");
+        else affMsg("mise à jour infructueuse");
+    }
+
+    public void modifierCoursE(Classe cr) {
+        System.out.println("modification d'un cours");
+        Cours co = selectionnerCoursDansClasse(cr); //ou cav.selectionner();
+        Enseignant en = eav.selectionner();
+        boolean ok = classeController.modifCours(cr, co, en);
+        if (ok) affMsg("mise à jour effectuée");
+        else affMsg("mise à jour infructueuse");
+    }
+
+    public void modifierCoursS(Classe cr) {
+        System.out.println("modification d'un cours");
+        Cours co = selectionnerCoursDansClasse(cr); //ou cav.selectionner();
+        Salle sa = sav.selectionner();
+        boolean ok = classeController.modifCours(cr, co, sa);
+        if (ok) affMsg("mise à jour effectuée");
+        else affMsg("mise à jour infructueuse");
+    }
+
+    @Override
+    public Classe selectionner() {
+        update(classeController.getAll());
+        int nl = choixListe(lc);
+        Classe classe = lc.get(nl - 1);
+        return classe;
+
     }
 
     private Cours selectionnerCoursDansClasse(Classe classe) {
@@ -236,42 +261,5 @@ public class ClasseViewConsole extends ClasseAbstractView {
         }
 
         return choixC;
-    }
-
-    public void modifierCoursH(Classe cr) {
-        System.out.println("modification d'un cours");
-        Cours co = selectionnerCoursDansClasse(cr);
-        System.out.print("nombre d'heures :");
-        int h = sc.nextInt();
-        boolean ok = classeController.modifCours(cr, co, h);
-        if (ok) affMsg("mise à jour effectuée");
-        else affMsg("mise à jour infructueuse");
-    }
-
-    public void modifierCoursE(Classe cr) {
-        System.out.println("modification d'un cours");
-        Cours co = selectionnerCoursDansClasse(cr);
-        Enseignant en = eav.selectionner();
-        boolean ok = classeController.modifCours(cr, co, en);
-        if (ok) affMsg("mise à jour effectuée");
-        else affMsg("mise à jour infructueuse");
-    }
-
-    public void modifierCoursS(Classe cr) {
-        System.out.println("modification d'un cours");
-        Cours co = selectionnerCoursDansClasse(cr);
-        Salle sa = sav.selectionner();
-        boolean ok = classeController.modifCours(cr, co, sa);
-        if (ok) affMsg("mise à jour effectuée");
-        else affMsg("mise à jour infructueuse");
-    }
-
-    @Override
-    public Classe selectionner() {
-        update(classeController.getAll());
-        int nl = choixListe(lc);
-        Classe classe = lc.get(nl - 1);
-        return classe;
-
     }
 }

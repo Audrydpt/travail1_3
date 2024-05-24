@@ -29,11 +29,11 @@ public abstract class DAOClasse extends Subject {
 
     public abstract List<Infos> getCours(Classe classe);
 
-    public abstract List<Infos> listeEnseignantsEtHeures(Classe classe);
+    public abstract List<EnseignantEtHeures> listeEnseignantsEtHeures(Classe classe);
 
-    public abstract List<Infos> listeSallesEtHeures(Classe classe);
+    public abstract List<SalleEtHeures> listeSallesEtHeures(Classe classe);
 
-    public abstract List<Infos> listeCoursEtHeures(Classe classe);
+    public abstract List<CoursEtHeures> listeCoursEtHeures(Classe classe);
 
     public abstract int nbrHeuresTot(Classe classe);
 

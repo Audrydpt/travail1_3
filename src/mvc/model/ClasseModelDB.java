@@ -7,7 +7,9 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ClasseModelDB extends DAOClasse {
     protected Connection dbConnect;
@@ -323,35 +325,34 @@ LEFT JOIN
     }
 
     @Override
-    public List<Infos> listeEnseignantsEtHeures(Classe classe) {
-        String query = "select nom,prenom,nbheures from APIInfosView where id_c=?";
-        return recherche(classe, query);
+    public List<EnseignantEtHeures> listeEnseignantsEtHeures(Classe classe) {
+        String query = "select * from APIInfosView where id_c=?";
+        return recherche(classe, query, "eh");
+    }
+
+    @Override
+    public List<SalleEtHeures> listeSallesEtHeures(Classe classe) {
+        String query = "select * from APIInfosView where id_c=?";
+        return recherche(classe, query, "sh");
 
     }
 
     @Override
-    public List<Infos> listeSallesEtHeures(Classe classe) {
-        String query = "select sigle,nbheures from APIInfosView where id_c=?";
-        return recherche(classe, query);
+    public List<CoursEtHeures> listeCoursEtHeures(Classe classe) {
+        String query = "select * from APIInfosView where id_c=?";
+        return recherche(classe, query, "coh");
 
     }
 
-    @Override
-    public List<Infos> listeCoursEtHeures(Classe classe) {
-        String query = "select code,intitule,nbheures from APIInfosView where id_c=?";
-        return recherche(classe, query);
+    private List recherche(Classe classe, String query, String type) {
+        List<EnseignantEtHeures> lle = new ArrayList<>();
+        List<CoursEtHeures> llco = new ArrayList<>();
+        List<SalleEtHeures> lls = new ArrayList<>();
 
-    }
-
-
-    private List<Infos> recherche(Classe classe, String query) {
-        List<Infos> ll = new ArrayList<>();
         try (PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1, classe.getId());
             ResultSet rs = pstm.executeQuery();
-            boolean trouve = false;
             while (rs.next()) {
-                trouve = true;
                 int id_s = rs.getInt("id_s");
                 String sigle = rs.getString("sigle");
                 int capacite = rs.getInt("capacite");
@@ -376,15 +377,29 @@ LEFT JOIN
                 Enseignant e = new Enseignant(id_e, matricule, nom, prenom, tel, chargeSem, salaireMensuel, dateEngagement);
                 Cours co = new Cours(id_co, code, intitule, s);
                 Infos i = new Infos(nbheures, s, e, co, id_c);
-                ll.add(i);
+
+                lle.add(new EnseignantEtHeures(e, nbheures));
+                llco.add(new CoursEtHeures(co, nbheures));
+                lls.add(new SalleEtHeures(s, nbheures));
 
 
             }
         } catch (SQLException e) {
             System.err.println("erreur sql :" + e);
+            e.printStackTrace();
             return null;
         }
-        return ll;
+
+        switch (type) {
+            case "eh":
+                return lle;
+            case "coh":
+                return llco;
+            case "sh":
+                return lls;
+            default:
+                return null;
+        }
     }
 
     @Override

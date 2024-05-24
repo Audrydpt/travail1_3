@@ -65,7 +65,7 @@ public class CoursEtHeures {
      */
     @Override
     public String toString() {
-        return "Cours : " + cours.getIntitule() + " - " + heures + " heures";
+        return "Cours : " + cours.getIntitule() + " - " + heures + " heures" + "\n";
     }
 
 }

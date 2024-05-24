@@ -101,7 +101,7 @@ public class EnseignantViewConsole extends EnseignantAbstractView {
 
     public Enseignant selectionner() {
         update(enseignantController.getAll());
-        int nl = choixListe(le);
+        int nl = choixElt(le);
         Enseignant en = le.get(nl - 1);
         return en;
     }

@@ -55,7 +55,7 @@ public class SalleEtHeures {
      */
     @Override
     public String toString() {
-        return "Salle : " + salle.getSigle() + " - " + heures + " heures";
+        return "Salle : " + salle.getSigle() + " - " + heures + " heures" + "\n";
     }
 
 }

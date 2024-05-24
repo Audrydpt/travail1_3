@@ -1,5 +1,7 @@
 package ecole.metier;
 
+import java.util.Objects;
+
 /**
  * Représente l'association entre un enseignant et le nombre d'heures dans une classe
  *
@@ -56,7 +58,8 @@ public class EnseignantEtHeures {
      */
     @Override
     public String toString() {
-        return "Enseignant : " + enseignant.getNom() + " " + enseignant.getPrenom() + " - " + heures + " heures";
+        return "Enseignant : " + enseignant.getNom() + " " + enseignant.getPrenom() + " - " + heures + " heures" + "\n";
     }
+
 
 }
