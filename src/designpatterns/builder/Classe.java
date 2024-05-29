@@ -12,7 +12,7 @@ public class Classe {
     private int annee;
     private String specialite;
     private int nbreEleve;
-    List<Infos> infos = new ArrayList<>();
+    private List<Infos> infos = new ArrayList<>();
 
     private Classe(ClasseBuilder builder) {
         this.id = builder.id;

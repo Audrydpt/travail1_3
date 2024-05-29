@@ -57,9 +57,14 @@ public class CoursViewConsole extends CoursAbstractView {
         scanner.nextLine();
         System.out.println("Intitule : ");
         String intitule = scanner.nextLine();
-        System.out.println("ID de la salle par défaut : ");
-        int salleId = scanner.nextInt();
-        Salle salleParDefault = salleController.search(salleId);
+        System.out.println("Voulez-vous entrer une salle par défaut ? (oui/non) ");
+        String reponse = scanner.next();
+        Salle salleParDefault = null;
+        if (reponse.equalsIgnoreCase("oui")) {
+            System.out.println("ID de la salle par défaut : ");
+            int salleId = scanner.nextInt();
+            salleParDefault = salleController.search(salleId);
+        }
         Cours cours = coursController.addCours(new Cours(code, intitule, salleParDefault));
         if (cours == null) affMsg("Ajout infructueux");
         else affMsg("Ajout effectué : " + cours);

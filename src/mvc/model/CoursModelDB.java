@@ -29,7 +29,11 @@ public class CoursModelDB extends DAOCours {
         try (CallableStatement cstm = dbConnect.prepareCall(addProcedure)) {
             cstm.setString(1, cours.getCode());
             cstm.setString(2, cours.getIntitule());
-            cstm.setInt(3, cours.getSalleParDefault().getId());
+            if (cours.getSalleParDefault() != null) {
+                cstm.setInt(3, cours.getSalleParDefault().getId());
+            } else {
+                cstm.setNull(3, Types.INTEGER);
+            }
             cstm.executeUpdate();
             notifyObservers();
             return cours;

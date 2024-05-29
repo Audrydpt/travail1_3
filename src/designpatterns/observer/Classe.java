@@ -11,7 +11,7 @@ public class Classe extends Subject {
     private int annee;
     private String specialite;
     private int nbrEleves;
-    List<Infos> infos = new ArrayList<>();
+    private List<Infos> infos = new ArrayList<>();
 
     public Classe(int id, int annee, String specialite, int nbrEleves) {
         this.id = id;

@@ -32,7 +32,6 @@ public class GestEcole {
         sv = new SalleViewConsole();
         sc = new SalleController(sm, sv);
 
-
         com = new CoursModelDB(sc);
         cov = new CoursViewConsole(sc);
         coc = new CoursController(com, cov);
@@ -48,7 +47,6 @@ public class GestEcole {
         cv.setCoursView(cov);
         cv.setSalleView(sv);
         cv.setEnseignantView(ev);
-
 
         sm.addObserver(sv);
         com.addObserver(cov);

@@ -11,7 +11,7 @@ public class Classe extends Elt {
     private int annee;
     private String specialite;
     private int nbrEleve;
-    List<Infos> infos = new ArrayList<>();
+    private List<Infos> infos = new ArrayList<>();
 
     public Classe(int id, int annee, String specialite, int nbrEleve) {
         super(id);
