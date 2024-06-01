@@ -88,11 +88,14 @@ public class CoursViewConsole extends CoursAbstractView {
         Cours cours = lco.get(nl - 1);
         String code = modifyIfNotBlank("code", cours.getCode());
         String intitule = modifyIfNotBlank("intitule", cours.getIntitule());
-        System.out.println("Nouvel ID de la salle par défaut : ");
-        int newSalleParDefaultId = scanner.nextInt();
-        Salle newSalle = salleController.search(newSalleParDefaultId);
-        Cours newCours = new Cours(cours.getId(), code, intitule, newSalle);
-        Cours coursMaj = coursController.update(newCours);
+        System.out.println("Tapez 'non' pour supprimer la salle par défaut, ou l'ID de la nouvelle salle par défaut : ");
+        String spdft = scanner.next();
+        Salle salle = null;
+        if (!spdft.equalsIgnoreCase("non")) {
+            salle = salleController.search(Integer.parseInt(spdft));
+        }
+        Cours co = new Cours(cours.getId(), code, intitule, salle);
+        Cours coursMaj = coursController.update(co);
         if (coursMaj == null) affMsg("Mise à jour infructueuse");
         else affMsg("Mise à jour effectuée : " + coursMaj);
     }

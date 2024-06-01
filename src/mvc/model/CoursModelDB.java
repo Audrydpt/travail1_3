@@ -69,7 +69,11 @@ public class CoursModelDB extends DAOCours {
             cstm.setInt(1, cours.getId());
             cstm.setString(2, cours.getCode());
             cstm.setString(3, cours.getIntitule());
-            cstm.setInt(4, cours.getSalleParDefault().getId());
+            if (cours.getSalleParDefault() != null) {
+                cstm.setInt(4, cours.getSalleParDefault().getId());
+            } else {
+                cstm.setNull(4, Types.INTEGER);
+            }
             cstm.executeUpdate();
             notifyObservers();
             return readCours(cours.getId());
