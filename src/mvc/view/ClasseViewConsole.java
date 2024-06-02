@@ -129,6 +129,7 @@ public class ClasseViewConsole extends ClasseAbstractView {
     public void ajouter() {
         System.out.println("Sigle : ");
         String sigle = sc.nextLine();
+        sc.nextLine();
         System.out.println("Année : ");
         int annee = sc.nextInt();
         sc.nextLine();
